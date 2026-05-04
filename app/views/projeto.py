@@ -55,6 +55,7 @@ def render_aba_projeto() -> None:
 
         - **Brasil (2024)** → visão geral do país  
         - **Minas Gerais (2021 a 2024)** → análise ao longo do tempo  
+        - **Caxambu (2021 a 2024)** → análise ao longo do tempo  
 
         Esses dados incluem informações como:
 
