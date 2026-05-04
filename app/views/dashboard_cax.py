@@ -166,12 +166,9 @@ A análise combina estatística descritiva, agregações ponderadas por particip
 
         with col2:
             st.markdown(
-                """
-            <div style="background-color:#01818078; solid #01818078">
+                """<b>Contexto e interpretação</b>
             
-            <b>Contexto e interpretação</b>
-            
-            O Brasil é diverso e complexo — e os dados refletem apenas parte dessa realidade.
+O Brasil é diverso e complexo — e os dados refletem apenas parte dessa realidade.
 
 O questionário socioeconômico do ENEM é uma fonte rica de informações sobre o contexto dos participantes. Quando analisado em conjunto com o desempenho nas provas, permite observar como fatores estruturais influenciam os resultados educacionais.
 
