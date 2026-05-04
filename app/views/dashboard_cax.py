@@ -179,7 +179,6 @@ No entanto, é importante reconhecer que os dados não capturam toda a complexid
 
 Por isso, as análises deste projeto são realizadas em nível agregado — considerando grupos e médias — o que permite identificar padrões estruturais sem perder de vista que cada trajetória é única.
             
-            </div>
                     """,
                     unsafe_allow_html=True
                 )
