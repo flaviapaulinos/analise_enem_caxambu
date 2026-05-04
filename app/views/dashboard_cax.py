@@ -154,19 +154,21 @@ def render_dashboard_cax():
             info_fullwidth(
                 """Quanto o contexto social influencia a nota no ENEM?<br><br>
     
-        🔎 Navegue pelas abas para explorar a relação entre fatores socioeconômicos e o desempenho no ENEM ao longo da série histórica (2021–2024), com foco no município de Caxambu (MG) e comparação com Minas Gerais.
+🔎 Navegue pelas abas para explorar a relação entre fatores socioeconômicos e o desempenho no ENEM ao longo da série histórica (2021–2024), com foco no município de Caxambu (MG) e comparação com Minas Gerais.
 
 A proposta deste aplicativo vai além da visualização de indicadores: ele foi desenvolvido para **explicar os dados**, destacando como variáveis como renda, tipo de escola e acesso a recursos se relacionam com os resultados educacionais.
 
 A análise combina estatística descritiva, agregações ponderadas por participantes e visualizações multivariadas, permitindo identificar padrões estruturais na desigualdade educacional, além de incorporar um modelo preditivo para estimar desempenho esperado.
         
         
-        **Mais informações na página Projeto.**"""
-            )
+**Mais informações na página Projeto.**""")
 
         with col2:
             st.markdown(
-                """<b>Contexto e interpretação</b>
+                """
+<div style="background-color:#01818078; solid #01818078">
+            
+<b>Contexto e interpretação</b>
             
 O Brasil é diverso e complexo — e os dados refletem apenas parte dessa realidade.
 
