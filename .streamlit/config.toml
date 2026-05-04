@@ -1,14 +1,11 @@
-[theme]
-primaryColor = "#F63366"
-backgroundColor = "#FFFFFF"
-secondaryBackgroundColor = "#F0F2F6"
-textColor = "#262730"
-font = "sans-serif"
-
 [server]
-maxUploadSize = 200
-enableXsrfProtection = true
-enableCORS = false
+headless = true
 
-[browser]
-gatherUsageStats = false
+[runner]
+magicEnabled = true
+
+[global]
+developmentMode = false
+
+[python]
+version = "3.10"
