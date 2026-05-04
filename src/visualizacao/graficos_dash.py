@@ -4883,7 +4883,7 @@ def grafico_evolucao_temporal_acurado(
             x=0.5,
             y=0.92,
             xanchor="center",
-            font=dict(size=16, family="Arial", color=FONTE_COR)
+            font=dict(size=18, family="Arial", color=FONTE_COR)
         ),
         height=700,
         width=700,

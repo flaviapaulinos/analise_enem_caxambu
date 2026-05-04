@@ -40,7 +40,7 @@ def menu_paginas(prefix: str = "top") -> None:
     O prefix garante keys únicas (top / footer).
     """
 
-    col1, col2, col3, col4, col5, _ = st.columns([1, 1, 1, 1, 1, 6])
+    col1, col2, col3, col4, col5, _ = st.columns([1.2, 0.8, 1, 1, 1, 5])
 
     if col1.button(PAGINAS_LABEL[PAGINA_CAX], key=f"{prefix}_cax"):
         set_pagina(PAGINA_CAX)

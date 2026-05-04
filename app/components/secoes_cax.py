@@ -91,12 +91,11 @@ def render_subaba_social_demografica_cax(
         plot(fig_barras, "cax_social_barras")
 
         st.caption(
-            """
-        Análise
+            """Análise
         
-        Escola: A elevada proporção de participantes que não informaram o tipo de escola cursada no ensino médio merece atenção. "
-"Uma hipótese plausível é a dificuldade de classificação por parte de estudantes com trajetória híbrida (rede pública e privada), "
-"o que pode levar à não resposta por não se identificarem plenamente com apenas uma das categorias."""
+Escola: A elevada proporção de participantes que não informaram o tipo de escola cursada no ensino médio merece atenção. 
+Uma hipótese plausível é a dificuldade de classificação por parte de estudantes com trajetória híbrida (rede pública e privada), 
+o que pode levar à não resposta por não se identificarem plenamente com apenas uma das categorias."""
         )
         st.caption(
                 "Renda: Em Caxambu, 76% dos participantes declararam renda familiar mensal de até 3 salários mínimos. "
@@ -123,14 +122,13 @@ def render_subaba_social_demografica_cax(
         plot(fig_evolucao_renda, "cax_evolucao_renda")
         st.caption(
             """Análise: 
-            
-        Escola: Apenas 10% dos participantes informaram ter cursado o ensino médio em escola privada. Na análise temporal, observa-se queda na renda média entre estudantes de escola pública (-9,4%) e privada (-8,9%) entre 2021 e 2024. Em contraste, o grupo que não informou o tipo de escola apresentou crescimento expressivo (+46,5%), contudo, esse resultado é fortemente influenciado pelo baixo número de observações em 2024 (n=5), o que limita sua robustez estatística. Em Minas Gerais, a evolução da renda média ao longo dos anos foi observada apenas entre os participantes que não informaram o tipo de escola cursada."""
+Escola: Apenas 10% dos participantes informaram ter cursado o ensino médio em escola privada. Na análise temporal, observa-se queda na renda média entre estudantes de escola pública (-9,4%) e privada (-8,9%) entre 2021 e 2024. Em contraste, o grupo que não informou o tipo de escola apresentou crescimento expressivo (+46,5%), contudo, esse resultado é fortemente influenciado pelo baixo número de observações em 2024 (n=5), o que limita sua robustez estatística. Em Minas Gerais, a evolução da renda média ao longo dos anos foi observada apenas entre os participantes que não informaram o tipo de escola cursada."""
         )
         
         st.caption(
             """ Análise:
             
-            Cor/Raça: No recorte por cor/raça, observa-se redução da renda média entre participantes brancos (-16,5%) e negros (-10,3%) no período analisado. Por outro lado, há crescimento expressivo entre os grupos que se declararam amarelos e aqueles que não informaram cor/raça; entretanto, essa variação deve ser interpretada com cautela devido ao tamanho amostral extremamente reduzido ao longo da série. Em Minas Gerais, por contraste, houve queda generalizada da renda média entre todas as raças."""
+Cor/Raça: No recorte por cor/raça, observa-se redução da renda média entre participantes brancos (-16,5%) e negros (-10,3%) no período analisado. Por outro lado, há crescimento expressivo entre os grupos que se declararam amarelos e aqueles que não informaram cor/raça; entretanto, essa variação deve ser interpretada com cautela devido ao tamanho amostral extremamente reduzido ao longo da série. Em Minas Gerais, por contraste, houve queda generalizada da renda média entre todas as raças."""
         )
                
                 
@@ -152,7 +150,7 @@ def render_subaba_social_demografica_cax(
         st.caption(
             """ Análise: 
             
-    Em Caxambu, observa-se maior participação relativa de estudantes de escolas privadas em comparação aos demais recortes: na faixa de renda de 3 a 5 salários mínimos, a participação de estudantes de escolas privadas já supera a de escolas públicas. Em Minas Gerais e no Brasil, esse predomínio ocorre apenas a partir da faixa de 5 a 10 salários mínimos."""
+Em Caxambu, observa-se maior participação relativa de estudantes de escolas privadas em comparação aos demais recortes: na faixa de renda de 3 a 5 salários mínimos, a participação de estudantes de escolas privadas já supera a de escolas públicas. Em Minas Gerais e no Brasil, esse predomínio ocorre apenas a partir da faixa de 5 a 10 salários mínimos."""
     )
         
     with col4:
@@ -177,7 +175,7 @@ def render_subaba_social_demografica_cax(
     st.caption(
         """ Análise:
         
-        O gráfico compara como a escolaridade dos pais influencia a opção por escola privada dentro de uma mesma faixa de renda. Em Caxambu, assim como no estado de Minas e no Brasil, é constatado que quanto maior a escolaridade dos pais, maior a chance do participante cursar escola privada (dentro de uma mesma faixa de renda)."""
+O gráfico compara como a escolaridade dos pais influencia a opção por escola privada dentro de uma mesma faixa de renda. Em Caxambu, assim como no estado de Minas e no Brasil, é constatado que quanto maior a escolaridade dos pais, maior a chance do participante cursar escola privada (dentro de uma mesma faixa de renda)."""
             )
 
     col5, col6 = st.columns([1.5, 1], gap="small")
@@ -193,7 +191,7 @@ def render_subaba_social_demografica_cax(
         st.caption(
             """ Análise:
             
-        Em Caxambu, Minas e no Brasil as pessoas que se identificam como brancas têm maior participação nas faixas de renda mais altas. No município a prevalência de pessoas com a renda entre 1 e 3 salários mínimos está aproximadamente 10 pontos percentuais acima do observado no estado, em contrapartida há menor participação nas faixas de renda mais altas.  Em Caxambu, dentre os participantes do Enem, as pessoas que se identificam como amarelas, tiveram maior participação nas faixas de rendas mais altas. É importante frisar que a representatividade dessa raça (23 participantes) é bem inferior, quando comparada com as raças branca e negra. """
+Em Caxambu, Minas e no Brasil as pessoas que se identificam como brancas têm maior participação nas faixas de renda mais altas. No município a prevalência de pessoas com a renda entre 1 e 3 salários mínimos está aproximadamente 10 pontos percentuais acima do observado no estado, em contrapartida há menor participação nas faixas de renda mais altas.  Em Caxambu, dentre os participantes do Enem, as pessoas que se identificam como amarelas, tiveram maior participação nas faixas de rendas mais altas. É importante frisar que a representatividade dessa raça (23 participantes) é bem inferior, quando comparada com as raças branca e negra. """
             )
 
     with col6:
@@ -237,11 +235,11 @@ def render_subaba_social_demografica_cax(
         st.caption(
             """ Análise:
             
-        A escolaridade dos responsáveis, assim como no resto do país, se concentra em: ensino fundamental e médio. Constata-se que as mães possuem o nível de escolaridade um pouco superior. O percentual de responsáveis com ensino superior ou pós-graduação está um pouco abaixo da média do estado."""
+A escolaridade dos responsáveis, assim como no resto do país, se concentra em: ensino fundamental e médio. Constata-se que as mães possuem o nível de escolaridade um pouco superior. O percentual de responsáveis com ensino superior ou pós-graduação está um pouco abaixo da média do estado."""
         )
         st.caption(
              """ Análise:
-             Já em relação a ocupação do responsáveis, há uma diferenciação entre mães e pais. A ocupação dos pais se divide principalmente em: rural, atividades que exigem ensino básico,  atividades que exigem ensino médio/ ou técnico e atividades manuais que exigem ensino fundamental. Muito similar a distribuição do país. A ocupação das mães se concentra em atividades básicas e atividades que exigem ensino médio, ou ensino técnico (padrão que pode ser visto no resto do país também)."""
+Já em relação a ocupação do responsáveis, há uma diferenciação entre mães e pais. A ocupação dos pais se divide principalmente em: rural, atividades que exigem ensino básico,  atividades que exigem ensino médio/ ou técnico e atividades manuais que exigem ensino fundamental. Muito similar a distribuição do país. A ocupação das mães se concentra em atividades básicas e atividades que exigem ensino médio, ou ensino técnico (padrão que pode ser visto no resto do país também)."""
             )
         #colocar link para dicionário
 
@@ -256,7 +254,7 @@ def render_subaba_social_demografica_cax(
         plot(fig_renda, "cax_social_renda")
         st.caption(
             """ Análise:
-        O padrão da distribuição de renda por ocupação dos responsáveis reflete o restante do país (maior renda para atividades que exigem maior escolaridade). Nota-se que a renda média em Caxambu (por tipo de ocupação) é menor que a média de Minas e do país (exceto para atividades rurais). A diferença é maior especialmente para atividades que exigem ensino médio/ou atividades técnicas e ocupações que exigem ensino superior. """
+O padrão da distribuição de renda por ocupação dos responsáveis reflete o restante do país (maior renda para atividades que exigem maior escolaridade). Nota-se que a renda média em Caxambu (por tipo de ocupação) é menor que a média de Minas e do país (exceto para atividades rurais). A diferença é maior especialmente para atividades que exigem ensino médio/ou atividades técnicas e ocupações que exigem ensino superior. """
             )
 
     graficos_socioecono = grafico_distribuicao_itens_domiciliares(
@@ -267,7 +265,7 @@ def render_subaba_social_demografica_cax(
     plot(graficos_socioecono, "cax_graficos_socioecono")
     st.caption(
         """ Análise:
-       A maior parte dos participantes reside em domicílios com 2 a 3 pessoas e possui geladeira. Cerca de um terço não possui máquina de lavar roupas, e o principal meio de acesso à informação é o telefone celular. Apenas 41 participantes não possuem celular em casa, enquanto 187 não possuem televisão."""
+A maior parte dos participantes reside em domicílios com 2 a 3 pessoas e possui geladeira. Cerca de um terço não possui máquina de lavar roupas, e o principal meio de acesso à informação é o telefone celular. Apenas 41 participantes não possuem celular em casa, enquanto 187 não possuem televisão."""
             )
 st.caption(
 "As interpretações devem considerar o tamanho amostral em cada grupo, especialmente nas categorias "
@@ -383,8 +381,8 @@ def render_subaba_desempenho_estrutura_cax(
         
         Análise:
              
-        A análise da relação entre renda familiar e desempenho evidencia um padrão consistente tanto em Caxambu quanto em Minas Gerais: quanto maior a renda, maior tende a ser a nota dos participantes. Caxambu tem maior engajamento, mesmo com menos recursos (em relação a média do estado)
-        Existe um ganho consistente de desempenho conforme aumenta a renda, especialmente na faixa de 10 a 15 salários mínimos. A relação não é perfeitamente linear nas rendas mais altas devido ao baixo número de participantes, o que aumenta a volatilidade Caxambu performa como o esperadado dado o nível de renda."""
+    A análise da relação entre renda familiar e desempenho evidencia um padrão consistente tanto em Caxambu quanto em Minas Gerais: quanto maior a renda, maior tende a ser a nota dos participantes. Caxambu tem maior engajamento, mesmo com menos recursos (em relação a média do estado)
+    Existe um ganho consistente de desempenho conforme aumenta a renda, especialmente na faixa de 10 a 15 salários mínimos. A relação não é perfeitamente linear nas rendas mais altas devido ao baixo número de participantes, o que aumenta a volatilidade Caxambu performa como o esperadado dado o nível de renda."""
         )
                    
 
