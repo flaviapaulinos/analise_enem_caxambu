@@ -33,7 +33,7 @@ A análise integra múltiplas dimensões:
 
 Os resultados indicam que o desempenho educacional está associado a uma **estrutura multidimensional persistente**, e não a fatores isolados.
 
-![projeto](relatorios/imagens/projeto.png)
+![projeto](relatorios/imagens/banner_dashboard_cax.png)
 
 ---
 
