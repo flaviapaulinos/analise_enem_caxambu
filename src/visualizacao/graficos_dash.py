@@ -2,6 +2,7 @@
 graficos_dash.py
 ===============
 
+
 Módulo unificado de visualizações para o dashboard interativo do ENEM.
 
 Este módulo consolida todas as funções de gráficos dos arquivos:
@@ -53,26 +54,36 @@ from src.preprocessamento.categorias import (
 # =============================================================================
 
 SEQUENCIA_CORES = [
-    "khaki", "teal", "cornflowerblue", "lightsalmon", "deepskyblue",
-    "darkolivegreen", "lightseagreen", "gold", "navy", "darkgreen",
-    "goldenrod", "springgreen", "rosybrown", "darkslateblue"
+    "palegoldenrod", "teal", "cornflowerblue", "lightsalmon", "deepskyblue",
+    "lightgreen", "steelblue", "gold", "powderblue", "mediumseagreen",
+    "goldenrod", "springgreen", "darkorange", "darkslateblue"
 ]
 
 COLOR_MAP_RENDA_COMP = {
     "(?)": "linen",
-    "até 1": "khaki",
+    "até 1": "lemonchiffon",
     "1 a 3": "teal",
-    "3 a 5": "cornflowerblue",
+    "3 a 5": "lightgreen",
     "5 a 10": "deepskyblue",
     "10 a 15": "lightsalmon",
     "15 a 20": "gold",
-    "acima de 20": "darkolivegreen",
+    "acima de 20": "cornflowerblue",
 }
 
+MAPA_CORES_COR_RACA = {
+    "(?)": "linen",
+    "não informada": "lightgrey",
+    "negra": "darkslateblue",
+    "branca": "teal",
+    "amarela": "gold",
+    "indígena": "lightsalmon",
+}
+
+
 MAPA_CORES_ESCOLA = {
-    "não informada": "khaki",
+    "não informada": "lightgrey",
     "pública": "teal",
-    "privada": "cornflowerblue"
+    "privada": "lightsalmon"
 }
 
 MATERIAS = {
@@ -80,7 +91,8 @@ MATERIAS = {
     "nota_ch": "Ciências Humanas",
     "nota_lc": "Linguagens e Códigos",
     "nota_mt": "Matemática",
-    "nota_redacao": "Redação"
+    "nota_redacao": "Redação",
+    "nota_media": "Média Geral",
 }
 
 NOMES_AMIGAVEIS = {
@@ -93,7 +105,7 @@ NOMES_AMIGAVEIS = {
     "escolaridade_mae": "Escolaridade da Mãe",
     "ocup_pai": "Ocupação do Pai",
     "ocup_mae": "Ocupação da Mãe",
-    "nota_cn": "Ciências Natureza",
+    "nota_cn": "Ciências da Natureza",
     "nota_ch": "Ciências Humanas",
     "nota_lc": "Linguagens",
     "nota_mt": "Matemática",
@@ -407,31 +419,25 @@ def obter_mapa_cores(categoria: str, subcategoria: Optional[str] = None) -> Opti
     if categoria == "escola":
         return MAPA_CORES_ESCOLA
 
-    if categoria in {"raça", "cor_raca"}:
-        return {
-            "não informada": "khaki",
-            "negra": "cornflowerblue",
-            "branca": "teal",
-            "amarela": "lightsalmon",
-            "indígena": "deepskyblue"
-        }
+    if categoria == "cor_raca":
+        return MAPA_CORES_COR_RACA
 
     if categoria == "sexo":
         return {
-            "feminino": "cornflowerblue",
-            "masculino": "teal"
+            "feminino": "darkseagreen",
+            "masculino": "lightsalmon"
         }
 
     if categoria == "faixa_etaria":
         return {
             "até 19": "teal",
             "20-25": "cornflowerblue",
-            "26-35": "khaki",
+            "26-35": "lemonchiffon",
             "36-45": "lightsalmon",
             "46-60": "deepskyblue",
-            "acima de 61": "darkolivegreen"
+            "acima de 61": "lightgreen"
         }
-
+        
     return None
 
 
@@ -442,7 +448,9 @@ def obter_nome_escopo(escopo: str) -> str:
     return {
         "br": "Brasil",
         "mg": "Minas Gerais",
-        "caxambu": "Caxambu"
+        "caxambu": "Caxambu",
+        "cax": "Caxambu",
+        "CAX": "Caxambu",
     }.get(escopo, escopo.upper())
 
 
@@ -1322,6 +1330,12 @@ def grafico_barras_percentual(
 
     textos_formatados = (df_percentual["perc_fmt"] + "%").tolist()
 
+    if escopo == "caxambu":
+        barmode = "group"
+    else:
+        barmode = "stack"
+   
+
     fig = px.bar(
         df_percentual,
         x=nivel_geografico,
@@ -1339,10 +1353,11 @@ def grafico_barras_percentual(
         text=textos_formatados,
         custom_data=["participantes_fmt", "perc_fmt"]
     )
+    
 
     fig.update_layout(
         height=400,
-        barmode="stack",
+        barmode=barmode,
         title=dict(x=0.5, 
                    y=0.95, 
                    xanchor="center",
@@ -1371,6 +1386,7 @@ def grafico_barras_percentual(
 
     fig.update_traces(
         hovertemplate=(
+            f"Composição percentual por {nome_categoria}.<br> "
             f"<b>{rotulo_geo}:</b> %{{x}}<br>"
             f"<b>{nome_categoria}:</b> %{{fullData.name}}<br>"
             "<b>Percentual:</b> %{customdata[1]}%<br>"
@@ -1378,6 +1394,9 @@ def grafico_barras_percentual(
             "<extra></extra>"
         )
     )
+    
+   
+   
 
     return fig, df_percentual
 # =============================================================================
@@ -1465,7 +1484,7 @@ def grafico_composicao_anual(df: pd.DataFrame, categoria: str = 'sal_min',
     fig.update_traces(
         texttemplate='%{text:.1f}%',
         textposition='inside',
-        textfont=dict(color='white', size=10),
+        textfont=dict(color='white', size=12),
         hovertemplate=(
             '📅 <b>Ano:</b> %{x}<br>'
             f'🏷️ <b>{nome_categoria}:</b> %{{fullData.name}}<br>'
@@ -1478,7 +1497,7 @@ def grafico_composicao_anual(df: pd.DataFrame, categoria: str = 'sal_min',
     fig.update_layout(
         xaxis_title='Ano',
         yaxis_title='Percentual (%)',
-        title=dict(x=0.5, y=0.95, font=dict(size=18)),
+        title=dict(x=0.5, y=0.95, font=dict(size=18), xanchor="center",),
         showlegend=True,
         legend=dict(
             title=legenda or nome_categoria,
@@ -1664,6 +1683,12 @@ def grafico_comparativo_pais(
         shared_xaxes=True,
         x_title=""
     )
+    
+    if escopo == "caxambu":
+        barmode = "group"
+    else:
+        barmode = "stack"
+   
 
     def adicionar_barras_subplot(
         fig_obj: go.Figure,
@@ -1721,11 +1746,11 @@ def grafico_comparativo_pais(
         title=dict(
             text=titulo,
             x=0.5,
-            y=0.98,
+            y=0.99,
             xanchor="center",
-            font=dict(size=18, family="Arial", color="#2C3E50")  # Mantendo original
+            font=dict(size=18, family="Arial", color="#2C3E50") 
         ),
-        barmode="stack",
+        barmode=barmode,
         legend=dict(
             title=dict(text=nome_categoria, font=dict(size=12)),
             orientation="h",
@@ -1737,7 +1762,7 @@ def grafico_comparativo_pais(
             
         ),
         template="plotly_white",
-        margin=dict(t=100, b=120, l=80, r=40),
+        margin=dict(t=120, b=120, l=80, r=40),
         separators=",."
     )
     
@@ -1769,8 +1794,377 @@ def grafico_comparativo_pais(
                 font=dict(size=14, color="#2C3E50")
             )
 
-    return fig, df_comparativo    
+    return fig, df_comparativo   
 
+
+def grafico_linha_nota_media_renda(
+    df: pd.DataFrame,
+    escopo: str = "caxambu",
+    anos_interesse: Optional[List[str]] = None,
+    escola: Optional[str] = None,
+    materia: Optional[str] = None
+):
+    df_filtrado = aplicar_filtros_dashboard(df, escopo=escopo)
+
+    if anos_interesse:
+        df_filtrado = df_filtrado[df_filtrado["ano"].isin([str(a) for a in anos_interesse])]
+
+    if escola:
+        df_filtrado = df_filtrado[df_filtrado["escola"] == escola]
+
+    # --- matéria ---
+    if materia is None:
+        colunas = list(MATERIAS.keys())
+        df_filtrado["nota_calc"] = df_filtrado[colunas].mean(axis=1)
+        titulo = "Nota Média Geral"
+    else:
+        df_filtrado["nota_calc"] = df_filtrado[materia]
+        titulo = MATERIAS.get(materia, materia)
+
+    df_agrupado = (
+        df_filtrado
+        .groupby(["ano", "sal_min"], observed=True)
+        .agg(
+            nota_media=("nota_calc", "mean"),
+            participantes=("nota_calc", "count")
+        )
+        .reset_index()
+    )
+
+    fig = px.line(
+        df_agrupado,
+        x="sal_min",
+        y="nota_media",
+        color="ano",
+        markers=True,
+        color_discrete_sequence=SEQUENCIA_CORES,
+        category_orders={"sal_min": obter_ordem_padrao("sal_min")}
+    )
+
+    fig = aplicar_texto_negrito_linhas(fig)
+
+    fig.update_layout(
+        title=dict(
+            text=f"{titulo} por Renda — Caxambu",
+            x=0.5,
+            y=0.98,
+            xanchor="center",
+            font=dict(size=18, family="Arial", color="#2C3E50"),
+        ),
+        xaxis_title=NOMES_AMIGAVEIS["sal_min"],
+        yaxis_title="Nota Média",
+        margin=dict(l=80, r=80, t=80, b=60),
+    )
+
+    fig.update_traces(
+        line=dict(width=3., dash='solid'),  
+        marker=dict(size=10, symbol='circle'),  
+    )
+
+
+    return fig, df_agrupado
+
+
+
+def evolucao_demografica_cax(
+    df: pd.DataFrame,
+    variavel: str,
+    eixo_y: str = "renda_media",
+    escopo: str = "caxambu"
+
+):
+    
+    variaveis_validas = ["sexo", "cor_raca", "escola", "faixa_etaria"]
+    
+    if variavel is None:
+        variavel = "cor_raca"
+    else:
+        variavel = variavel.strip().lower()
+        if variavel not in variaveis_validas:
+            variavel = "cor_raca"
+
+    
+    df_filtrado = aplicar_filtros_dashboard(df, escopo=escopo)
+    
+
+    df_agg = (
+        df_filtrado
+        .groupby(["ano", variavel], observed=True)
+        .agg(
+            valor=(eixo_y, "mean"),
+            participantes=(variavel, "count")
+        )
+        .reset_index()
+    )
+    
+    mapa_cores = obter_mapa_cores(variavel)
+
+    if mapa_cores:
+        fig = px.line(
+            df_agg,
+            x="ano",
+            y="valor",
+            color=variavel,
+            markers=True,
+            color_discrete_map=mapa_cores
+        )
+    else:
+        fig = px.line(
+            df_agg,
+            x="ano",
+            y="valor",
+            color=variavel,
+            markers=True,
+            color_discrete_sequence=SEQUENCIA_CORES
+        )
+        
+        
+    nome_variavel = NOMES_AMIGAVEIS.get(variavel, variavel)
+    nome_indicador = NOMES_AMIGAVEIS.get(eixo_y, eixo_y)
+    
+    texto_explicativo = (
+        f"Cada linha representa uma categoria de {nome_variavel.lower()} "
+        f"ao longo do tempo"
+    )
+    
+    fig.update_xaxes(type="category")
+    
+    fig.update_traces(
+        customdata=df_agg[["participantes"]],
+        hovertemplate=
+         f"<i>{texto_explicativo}</i>"
+        "<extra></extra>"
+        "<b>%{fullData.name}</b><br>"
+        "Ano: %{x}<br>"
+        f"{nome_indicador}: %{{y:.2f}}<br>"
+        "Participantes: %{customdata[0]}<br><br>"
+       
+    )
+
+    fig = aplicar_texto_negrito_linhas(fig)
+
+    fig.update_layout(
+        title=dict(
+            text=f"Evolução de {NOMES_AMIGAVEIS.get(eixo_y, eixo_y)}" ,
+            x=0.5,
+            y=0.95,
+            xanchor="center",
+            font=dict(size=18, family="Arial", color="#2C3E50"),
+    ),
+        height=400,
+        yaxis_title=NOMES_AMIGAVEIS.get(eixo_y, eixo_y)
+
+    )
+
+    fig.update_layout(
+        xaxis_title=None
+    )
+
+    return fig, df_agg
+
+
+def grafico_distribuicao_itens_domiciliares(
+    df: pd.DataFrame,
+    escopo: str = "caxambu",
+    ano_selecionado: Optional[str] = None,
+    escola_selecionada: Optional[str] = None
+):
+
+    # =========================
+    # 🔹 FILTROS PADRONIZADOS
+    # =========================
+    df_filtrado = aplicar_filtros_dashboard(
+        df=df,
+        escopo=escopo,
+        ano_selecionado=ano_selecionado
+    ).copy()
+
+    if escola_selecionada and escola_selecionada != "Todas":
+        df_filtrado = df_filtrado[df_filtrado["escola"] == escola_selecionada]
+
+    if df_filtrado.empty:
+        return go.Figure()
+
+    # =========================
+    # 🔹 VARIÁVEIS DISPONÍVEIS
+    # =========================
+    variaveis_candidatas = [
+        "n_pessoas_resd",
+        "emp_domst",
+        "gelad",
+        "lv_rp",
+        "tv",
+        "cel",
+        "comptdr"
+    ]
+
+    variaveis = [v for v in variaveis_candidatas if v in df_filtrado.columns]
+
+    # =========================
+    # 🔹 NOMES AMIGÁVEIS
+    # =========================
+    nomes = {
+        "n_pessoas_resd": "Pessoas por residência ",
+        "emp_domst": "Empregado doméstico - vezes por semana",
+        "gelad": "Geladeira(s) na residência",
+        "lv_rp": "Lava-roupas na residência",
+        "tv": "Aparelho(s) de tv na residência",
+        "cel": "Celular(es) na residência",
+        "comptdr": "Computador(es) na residência"
+        
+    }
+
+    titulos_x = {
+        "n_pessoas_resd": "Quantidade de pessoas por residência",
+        "emp_domst": "Número de dias por semana",
+        "gelad": "Quantidade de geladeiras por residência",
+        "lv_rp": "Lava-roupas na residência",
+        "tv": "Quantidade de televisões por residência",
+        "cel": "Quantidade de celulares por residência",
+        "comptdr": "Quantidade de computadores por residência"
+    }
+
+    # =========================
+    # 🔹 CRIAR SUBPLOTS
+    # =========================
+    fig = make_subplots(
+        rows=3,
+        cols=3,
+        subplot_titles=[nomes.get(v, v) for v in variaveis]
+    )
+
+    # =========================
+    # 🎨 MAPA DE CORES (1 cor por gráfico)
+    # =========================
+    cores_por_variavel = {
+        var: SEQUENCIA_CORES[i % len(SEQUENCIA_CORES)]
+        for i, var in enumerate(variaveis)
+    }
+
+    # =========================
+    # 🔹 LOOP DOS GRÁFICOS
+    # =========================
+
+    row, col = 1, 1
+    
+    ordens_personalizadas = {
+        "n_pessoas_resd": [str(i) for i in range(1, 11)]
+    }
+    
+    for var in variaveis:
+    
+        dados = df_filtrado[var].copy()
+    
+        # 🔸 Transformações
+        if var == "n_pessoas_resd":
+            dados = dados.astype(int).clip(upper=10)
+            dados = dados.astype(str)
+    
+        elif var in ["gelad"]:
+            dados = dados.apply(lambda x: "3+" if x >= 3 else str(int(x)))
+    
+        elif var in ["cel", "comptdr"]:
+            dados = dados.apply(lambda x: "4+" if x >= 4 else str(int(x)))
+    
+        elif var == "emp_domst":
+            def categorizar(x):
+                if x == 0:
+                    return "0"
+                elif x <= 2:
+                    return "1-2"
+                elif x <= 4:
+                    return "3-4"
+                else:
+                    return "5+"
+            dados = dados.apply(categorizar)
+    
+        elif var == "lv_rp":
+            dados = dados.map({0: "não possui", 1: "possui"})
+    
+        else:
+            dados = dados.astype(str)
+    
+        # 🔸 Contagem (AGORA sim, antes da ordenação)
+        contagem = dados.value_counts().reset_index()
+        contagem.columns = [var, "quantidade"]
+    
+        # 🔸 Ordenação
+        if var in ordens_personalizadas:
+            contagem[var] = pd.Categorical(
+                contagem[var],
+                categories=ordens_personalizadas[var],
+                ordered=True
+            )
+    
+        contagem = contagem.sort_values(by=var)
+    
+        # 🔸 Plot
+        fig.add_trace(
+            go.Bar(
+                x=contagem[var],
+                y=contagem["quantidade"],
+                marker_color=cores_por_variavel[var],
+                text=contagem["quantidade"],
+                textposition="auto",
+                hovertemplate="<b>%{x}</b><br>Quantidade: %{y}<extra></extra>"
+            ),
+            row=row,
+            col=col
+        )
+        fig.update_xaxes(
+            title_text=titulos_x.get(var, ""),
+            row=row,
+            col=col
+        )
+    
+        col += 1
+        if col > 3:
+            col = 1
+            row += 1
+            
+       
+
+    # =========================
+    # 🔹 TÍTULO DINÂMICO
+    # =========================
+    titulo = f"Perfil Socioeconômico Caxambu"
+
+    if ano_selecionado:
+        titulo += f" ({ano_selecionado})"
+
+    if escola_selecionada and escola_selecionada != "Todas":
+        titulo += f" - {escola_selecionada}"
+
+    # =========================
+    # 🔹 LAYOUT
+    # =========================
+    fig.update_layout(
+        title=dict(
+            text=titulo, 
+            x=0.5,
+            y=0.98,
+            xanchor="center",
+            font=dict(size=18, family="Arial", color="#2C3E50")
+        ),        
+        height=900,
+        width=900,
+        showlegend=False,
+        template="plotly_white"
+    )
+    #fig.update_yaxes(showticklabels=False)
+    fig.add_annotation(
+        text="Quantidade de participantes",
+        x=-0.07,
+        y=0.5,
+        xref="paper",
+        yref="paper",
+        textangle=-90,
+        showarrow=False,
+        font=dict(size=14)
+    )
+
+    return fig
+    
 # =============================================================================
 # FUNÇÕES DE GRÁFICOS - COMPARATIVO ESCOLA PRIVADA POR ESCOLARIDADE
 # =============================================================================
@@ -1913,7 +2307,7 @@ def grafico_comparativo_escola_privada_pais(
     # ---------------------------------------------------------------------
     # 6. GRÁFICO
     # ---------------------------------------------------------------------
-    cores = {"Pai": SEQUENCIA_CORES[0], "Mãe": SEQUENCIA_CORES[1]}
+    cores = {"Pai": SEQUENCIA_CORES[8], "Mãe": SEQUENCIA_CORES[9]}
 
     fig = px.bar(
         tabela_comparativo,
@@ -1947,6 +2341,7 @@ def grafico_comparativo_escola_privada_pais(
         text=None,
         textposition="none",
         hovertemplate=(
+            f"Cada subgráfico mostra um nível de escolaridade dos pais, indicando o percentual em escola privada de acordo com a faixa de renda <br>"
             "<b>Renda:</b> %{x}<br>"
             "<b>Escolaridade:</b> %{customdata[0]}<br>"
             "<b>Parente:</b> %{customdata[1]}<br>"
@@ -2006,7 +2401,7 @@ def grafico_comparativo_escola_privada_pais(
             font=dict(size=18, family="Arial", color="#2C3E50")
         ),
         template="plotly_white",
-        margin=dict(t=100, b=100, l=80, r=40),
+        margin=dict(t=100, b=80, l=80, r=40),
         separators=",."
     )
 
@@ -2115,7 +2510,7 @@ def grafico_renda_responsavel(
         color="Responsável",
         barmode="group",
         title=titulo,
-        color_discrete_sequence=[SEQUENCIA_CORES[0], SEQUENCIA_CORES[1]],
+        color_discrete_sequence=[SEQUENCIA_CORES[9], SEQUENCIA_CORES[8]],
         labels={"valor_medio": "Renda Média (salários mínimos)"},
         custom_data=["Responsável", "valor_fmt", "participantes_fmt"],
         text=df_combinado["texto_barra"].tolist()
@@ -2249,8 +2644,9 @@ def grafico_coluna_empilhada_percentual(
     fig.update_traces(
         texttemplate="%{text}%",
         textposition="inside",
-        textfont=dict(color="white", size=10),
+        textfont=dict(color="white", size=12),
         hovertemplate=(
+            f"Composição percentual da escola cursada por renda familiar.<br>"
             f"<b>{nome_x}:</b> %{{x}}<br>"
             f"<b>{nome_cor}:</b> %{{fullData.name}}<br>"
             "<b>Percentual:</b> %{y:.1f}%<br>"
@@ -2367,9 +2763,10 @@ def grafico_raca_por_renda_barras(
         textposition="inside",
         textfont=dict(
             family="Arial Bold, Arial, sans-serif",
-            size=11
+            size=12
         ),
         hovertemplate=(
+            f"Distribuição de cada grupo racial entre as faixas de renda."
             "<b>Raça/Cor:</b> %{y}<br>"
             "<b>Faixa de renda:</b> %{fullData.name}<br>"
             "<b>Percentual:</b> %{customdata[1]}%<br>"
@@ -2387,15 +2784,16 @@ def grafico_raca_por_renda_barras(
         xaxis_title="Percentual (%)",
         yaxis_title="Raça/Cor",
         legend_title="Faixa de Renda",
+        height=450,
         #template="plotly_white",
         separators=".,",
         legend=dict(
             orientation="h",
             yanchor="bottom",
-            y=-0.95,
+            y=-0.35,
             xanchor="center",
             x=0.5,
-            font=dict(size=10)
+            font=dict(size=12)
         ),
     )
 
@@ -2437,7 +2835,7 @@ def tabela_plotly_gradiente(
         filtro_geo=filtro_geo
     ).copy()
 
-    colunas_validas = {"sexo", "cor_raca", "escola"}
+    colunas_validas = {"sexo", "cor_raca", "escola", "faixa_etaria"}
     
     if coluna is None:
         coluna = "cor_raca"
@@ -2719,6 +3117,7 @@ def tabela_plotly_gradiente(
         margin=dict(l=50, r=50, t=100, b=50),
         font=dict(family="Arial, sans-serif")
     )
+    
 
     return fig, tabela
 #=============================================================================
@@ -3135,6 +3534,7 @@ def treemap_escola_renda(
     fig.update_traces(
         texttemplate="<br>Escola: %{customdata[2]}<br>Participantes: %{customdata[1]}<br>Renda: %{customdata[0]}",
         hovertemplate=(
+            f"Renda média e quantidade de participantes por escola cursada."
             "<b>Escola:</b> %{customdata[2]}<br>"
             "<b>Participantes:</b> %{customdata[1]}<br>"
             "<b>Renda Média Familiar (salários mínimos):</b> %{customdata[0]}<br>"
@@ -3159,7 +3559,7 @@ def treemap_escola_renda(
 def treemap_nota_escola(
     df: pd.DataFrame,
     ano_selecionado: Optional[str] = None,
-    materia: str = "Matemática",
+    materia: str = 'Média Geral',
     titulo: Optional[str] = None,
     escopo: str = "mg",
     weight_col: str = "participantes"
@@ -3426,7 +3826,7 @@ def grafico_notas_por_regiao(
     }
 
     nomes_materias = {
-        "nota_media": "Nota Média",
+        "nota_media": "Média Geral",
         "nota_cn": "Ciências da Natureza",
         "nota_ch": "Ciências Humanas",
         "nota_lc": "Linguagens e Códigos",
@@ -4133,7 +4533,8 @@ def evolucao_renda_grupos_demograficos(
     Tuple[go.Figure, pd.DataFrame]
         Gráfico e DataFrame com os dados
     """
-    
+
+   
     # Aplicar filtros
     df_filtrado = aplicar_filtros_dashboard(
         df=df,
@@ -4218,8 +4619,8 @@ def evolucao_renda_grupos_demograficos(
     
     # Atualizar traces com formatação
     fig.update_traces(
-        line=dict(width=3),
-        marker=dict(size=8),
+        line=dict(width=4),
+        marker=dict(size=10),
         hovertemplate=(
             "<b>Ano:</b> %{x}<br>"
             f"<b>{nome_variavel}:</b> %{{fullData.name}}<br>"
@@ -4411,6 +4812,7 @@ def grafico_evolucao_temporal_acurado(
             ),
             customdata=customdata,
             hovertemplate=(
+                "O gráfico compara a nota média anual com a renda média e a participação em cada exame ao longo dos anos analisados.<br>"
                 "<b>Ano %{x}</b><br>"
                 "<b>Nota Média:</b> %{customdata[1]}<br>"
                 "<b>Renda Média:</b> %{customdata[0]} salários mínimos<br>"
@@ -4550,13 +4952,16 @@ def analise_mobilidade_ranking(
     ano_selecionado=None,
     escopo: str = "mg",
     filtro_geo: Optional[str] = None,
-    materia_selecionada: str = "nota_media",
+    materia_selecionada: str = "nota_media",  # valor padrão
     titulo: Optional[str] = None,
     weight_col: str = "participantes",
     metodo: str = "ponderado",
     top_n: Optional[int] = None,
     escola_selecionada: Optional[List[str]] = None,  
 ) -> Tuple[go.Figure, pd.DataFrame]:
+    """
+    Analisa a mobilidade do ranking de notas ao longo dos anos.
+    """
     """
     Analisa a mobilidade do ranking de notas ao longo dos anos.
 
@@ -4588,6 +4993,39 @@ def analise_mobilidade_ranking(
     # ---------------------------------------------------------
     # 1) Filtros base
     # ---------------------------------------------------------
+    from src.config import MAPA_MATERIA_LABEL_PARA_COLUNA
+    
+    # Se vier None ou vazio, usa padrão
+    if not materia_selecionada:
+        materia_selecionada = "nota_media"
+    
+    # Se for label amigável (ex: "Matemática"), converte para coluna
+    if materia_selecionada in MAPA_MATERIA_LABEL_PARA_COLUNA:
+        materia_selecionada = MAPA_MATERIA_LABEL_PARA_COLUNA[materia_selecionada]
+    
+    # Lista de colunas válidas
+    colunas_validas = ['nota_media', 'nota_cn', 'nota_ch', 'nota_lc', 'nota_mt', 'nota_redacao']
+    
+    # Se ainda não for válida, tenta encontrar correspondência
+    if materia_selecionada not in colunas_validas:
+        # Tentativa de matching aproximado
+        materia_lower = materia_selecionada.lower()
+        for col in colunas_validas:
+            if col in materia_lower or materia_lower in col:
+                materia_selecionada = col
+                break
+        else:
+            # Se não encontrar, usa padrão e avisa
+            st.warning(f"Matéria '{materia_selecionada}' não reconhecida. Usando 'Média Geral'.")
+            materia_selecionada = "nota_media"
+    
+    # Agora sim, validação final
+    if materia_selecionada not in colunas_validas:
+        raise ValueError(
+            f"materia_selecionada deve ser uma das seguintes: {colunas_validas}\n"
+            f"Recebido: '{materia_selecionada}'"
+        )
+    
 
     if escola_selecionada is not None and "escola" in df_filtrado.columns:
         df_filtrado = df_filtrado[
@@ -4825,7 +5263,7 @@ def analise_mobilidade_ranking(
      
 
     fig.update_traces(
-        line=dict(width=3),
+        line=dict(width=4),
         marker=dict(size=9),
         hovertemplate=(
             f"<b>{rotulo_geo}:</b> %{{customdata[0]}}"
@@ -5013,16 +5451,164 @@ def grafico_comparativo_nota_renda(df: pd.DataFrame, ano_selecionado: Optional[s
 # =============================================================================
 # FUNÇÕES DE GRÁFICOS - BOXPLOT
 # =============================================================================
+def boxplot_notas(df, ano_selecionado=None, escola_selecionada=None, escopo='caxambu'):
+    """
+    Cria boxplot das notas por matéria para Caxambu, filtrado por ano e escola
+    com formatação no padrão brasileiro.
+    """
+    if escopo == "caxambu" and "municipio" in df.columns:
+        df = df[df["municipio"].astype(str).str.contains("Caxambu", na=False)]
+    
+    # Garantir que as variáveis sejam string
+    if ano_selecionado and ano_selecionado != "Todos":
+        df_filtrado = df[df["ano"] == str(ano_selecionado)].copy()
+        titulo_ano = f"({ano_selecionado})"
+    else:
+        df_filtrado = df.copy()
+        titulo_ano = "(Todos os anos)"
+        
+    # Filtrar por escola se especificada
+    if escola_selecionada and escola_selecionada != "Todas":
+        df_filtrado = df_filtrado[df_filtrado["escola"] == escola_selecionada]
+    
+    if df_filtrado.empty:
+        raise ValueError(f"Nenhum dado encontrado para o ano {ano_selecionado}" + 
+                        (f" e escola {escola_selecionada}." if escola_selecionada else "."))
+    
+    # Preparar dados para formato longo
+    notas_colunas = ['nota_media', 'nota_cn', 'nota_ch', 'nota_lc', 'nota_mt', 'nota_redacao']
+    df_long = df_filtrado[notas_colunas].melt(var_name='materia', value_name='nota')
+
+    # Mapear nomes das matérias
+    df_long['materia'] = df_long['materia'].map(MATERIAS)
+    
+    # Remover valores nulos
+    df_long = df_long.dropna(subset=['nota'])
+    if df_long.empty:
+        raise ValueError("Sem dados válidos para o gráfico")
+
+    # =========================
+    # 🔹 TÍTULO DINÂMICO
+    # =========================
+    if titulo_ano == "(Todos os anos)":
+        total = len(df_filtrado)
+        total_fmt = formatar_numero_br(total)
+        titulo_final = (
+            f"Distribuição das Notas — Caxambu {titulo_ano}<br>"
+            f"<sup>Total de participantes: {total_fmt}</sup>"
+        )
+    else:
+        titulo_final = (
+            f"Distribuição das Notas — Caxambu {titulo_ano}"
+        )
+    
+    if escola_selecionada and escola_selecionada != "Todas":
+        titulo_final += f" - {escola_selecionada}"
+        
+    fig = px.box(
+        df_long,
+        x="materia",
+        y="nota",
+        color="materia",
+        title=titulo_final,
+        labels={"materia": "Matéria", "nota": "Nota"},
+        color_discrete_sequence=SEQUENCIA_CORES,
+        category_orders={"materia": list(MATERIAS.values())}
+    )
+    
+    fig.update_layout(
+        height=600,
+        width=1000,
+        title=dict(
+            x=0.5, 
+            y=0.95, 
+            font=dict(size=20),
+            xanchor="center",
+        ),
+        showlegend=False,
+        plot_bgcolor="rgba(0,0,0,0)",
+        paper_bgcolor="rgba(0,0,0,0)",
+        margin=dict(l=50, r=50, b=50, t=100),
+        xaxis=dict(tickangle=45)
+    )
+    
+    # Aplicar formatação BR nos eixos
+    fig = aplicar_eixos_br_plotly(fig, eixo_y_decimal=True, casas_decimais_y=1)
+    
+    # Adicionar valores dos percentis com formatação BR
+    for materia in df_long['materia'].unique():
+        dados = df_long.loc[df_long['materia'] == materia, 'nota']
+        if len(dados) > 0:
+            q1, mediana, q3 = np.percentile(dados, [25, 50, 75])
+            minimo, maximo = dados.min(), dados.max()
+            
+            # Formatar valores no padrão BR
+            min_fmt = formatar_decimal_br(minimo, 1)
+            med_fmt = formatar_decimal_br(mediana, 1)
+            max_fmt = formatar_decimal_br(maximo, 1)
+            
+            # Adicionar anotações para os valores principais
+            valores = [minimo, mediana, maximo]
+            labels = ['Mín', 'Med', 'Máx']
+            textos_fmt = [min_fmt, med_fmt, max_fmt]
+            
+            for i, (valor, texto_fmt) in enumerate(zip(valores, textos_fmt)):
+                # Alternar offset para evitar sobreposição
+                offset = -20 if i == 0 else (0 if i == 1 else 15)
+                
+                fig.add_annotation(
+                    x=materia,
+                    y=valor,
+                    text=f"{labels[i]}: {texto_fmt}",
+                    showarrow=False,
+                    font=dict(size=9, color="black"),
+                    align="center",
+                    yshift=offset,
+                    bgcolor="rgba(255,255,255,0.7)",
+                    bordercolor="lightgray",
+                    borderwidth=0.5,
+                    borderpad=2
+                )
+    
+    # Estatísticas descritivas por matéria com formatação BR
+    estatisticas = (
+        df_long.groupby("materia")["nota"]
+        .agg(["mean", "median", "std", "count", "min", "max"])
+        .round(1)
+        .reset_index()
+    )
+    
+    estatisticas.rename(columns={
+        "mean": "Média",
+        "median": "Mediana", 
+        "std": "Desvio Padrão",
+        "count": "Nº Participantes",
+        "min": "Mínimo",
+        "max": "Máximo"
+    }, inplace=True)
+    
+    # Aplicar formatação BR nas estatísticas
+    for col in ["Média", "Mediana", "Desvio Padrão", "Mínimo", "Máximo"]:
+        if col in estatisticas.columns:
+            estatisticas[col] = estatisticas[col].apply(lambda x: formatar_decimal_br(x, 1))
+    
+    estatisticas["Nº Participantes"] = estatisticas["Nº Participantes"].apply(
+        lambda x: formatar_numero_br(int(x))
+    )
+    
+    return fig, estatisticas
+
+
 
 def boxplot_notas_por_regiao(
     df: pd.DataFrame,
     ano_selecionado: Optional[str] = None,
+    escola_selecionada: Optional[str] = None,
     filtro_geo: Optional[str] = None,
-    materia_selecionada: str = "Matemática",
+    materia_selecionada: str = "Média Geral",
     titulo: Optional[str] = None,
-    escopo: str = 'mg',
-    weight_col: str = 'participantes'
-) -> Tuple[go.Figure, pd.DataFrame]:
+    escopo: str = 'caxambu'
+):
     """
     Boxplot das notas por região/UF.
     
@@ -5032,6 +5618,8 @@ def boxplot_notas_por_regiao(
         DataFrame com os dados
     ano_selecionado : str, optional
         Ano para filtrar
+    escola_selecionada : str, optional
+        Escola para filtrar
     filtro_geo : str, optional
         UF (para br) ou região (para mg)
     materia_selecionada : str
@@ -5048,261 +5636,142 @@ def boxplot_notas_por_regiao(
     Tuple[go.Figure, pd.DataFrame]
         Boxplot e DataFrame com estatísticas
     """
-    
-    # Aplicar filtros do dashboard
     df_filtrado = aplicar_filtros_dashboard(
         df=df,
         escopo=escopo,
         ano_selecionado=ano_selecionado,
         filtro_geo=filtro_geo
     )
-    
+
+    if escola_selecionada:
+        df_filtrado = df_filtrado[df_filtrado["escola"] == escola_selecionada]
+
     if df_filtrado.empty:
-        fig = go.Figure()
-        fig.add_annotation(
-            text="Sem dados disponíveis para os filtros selecionados",
-            x=0.5, y=0.5,
-            showarrow=False,
-            font=dict(size=18, color="gray")
-        )
-        return fig, pd.DataFrame()
-    
-    # Mapear matéria para coluna
+        return go.Figure(), pd.DataFrame()
+
+    # --- matéria ---
     materias_map = {v: k for k, v in MATERIAS.items()}
-    coluna_nota = materias_map.get(materia_selecionada, 'nota_mt')
-    
-    # Verificar se a coluna existe
-    if coluna_nota not in df_filtrado.columns:
-        fig = go.Figure()
-        fig.add_annotation(
-            text=f"Coluna {coluna_nota} não disponível",
-            x=0.5, y=0.5,
-            showarrow=False,
-            font=dict(size=18, color="gray")
-        )
-        return fig, pd.DataFrame()
-    
-    # Determinar nível geográfico
-    if escopo == "br" and "uf" in df_filtrado.columns:
-        nivel_geo = "uf"
-        rotulo_geo = "UF"
+    coluna_nota = materias_map.get(materia_selecionada, "nota_media")
+
+    # --- nível geográfico ---
+    if escopo == "caxambu":
+        nivel_geo = "escola"
+        rotulo_geo = "Escola"
     elif "regiao" in df_filtrado.columns:
         nivel_geo = "regiao"
         rotulo_geo = "Região"
-    elif "uf" in df_filtrado.columns:
+    else:
         nivel_geo = "uf"
         rotulo_geo = "UF"
-    else:
-        nivel_geo = "escola"
-        rotulo_geo = "Escola"
-    
-    # Ordem das categorias
-    ordem_geo = obter_ordem_padrao(nivel_geo)
 
-    
-    
-    # Criar boxplot
+    # Boxplot base
     fig = px.box(
         df_filtrado,
         x=nivel_geo,
         y=coluna_nota,
         color=nivel_geo,
-        title="",  # Título será definido no layout
-        labels={
-            nivel_geo: rotulo_geo, 
-            coluna_nota: f"Nota de {materia_selecionada}"
-        },
-        color_discrete_sequence=SEQUENCIA_CORES,
-        category_orders={nivel_geo: ordem_geo} if ordem_geo else None,
-        points="outliers"  # Mostrar apenas outliers como pontos
+        points="outliers",
+        color_discrete_sequence=SEQUENCIA_CORES
     )
-    
-    # Calcular estatísticas com observed=True para evitar warning
-    estatisticas = df_filtrado.groupby(nivel_geo, observed=True)[coluna_nota].agg([
-        ('min', 'min'),
-        ('q1', lambda x: x.quantile(0.25)),
-        ('median', 'median'),
-        ('q3', lambda x: x.quantile(0.75)),
-        ('max', 'max'),
-        ('mean', 'mean'),
-        ('std', 'std'),
-        ('count', 'count')
-    ]).round(2).reset_index()
-    
-    # Renomear colunas
-    estatisticas.columns = [
-        rotulo_geo, 'Mínimo', 'Q1', 'Mediana', 'Q3', 'Máximo', 
-        'Média', 'Desvio Padrão', 'Nº Participantes'
-    ]
-    
-    # Formatar colunas numéricas para exibição
-    estatisticas['Média_fmt'] = estatisticas['Média'].apply(lambda x: formatar_decimal_br(x, 1))
-    estatisticas['Mediana_fmt'] = estatisticas['Mediana'].apply(lambda x: formatar_decimal_br(x, 1))
-    estatisticas['Participantes_fmt'] = estatisticas['Nº Participantes'].apply(lambda x: formatar_numero_br(x, 0))
-    
-    # Título
-    if titulo is None:
-        titulo = f"Distribuição das Notas de {materia_selecionada} - {obter_nome_escopo(escopo)}"
-        titulo += montar_complemento_filtro_geo(escopo, filtro_geo)
-        if ano_selecionado:
-            titulo += f" ({ano_selecionado})"
-    
-    # Atualizar layout
-    fig.update_layout(
-        title=dict(
-            text=titulo,
-            x=0.5,
-            xanchor="center",
-            font=dict(size=18, family="Arial Bold, Arial, sans-serif")
-        ),
-        showlegend=False,
-        template='plotly_white',
-        height=500,
-        width=900,
-        xaxis=dict(
-            title=rotulo_geo,
-            tickangle=45,
-            tickfont=dict(family="Arial, sans-serif", size=11)
-        ),
-        yaxis=dict(
-            title=f"Nota de {materia_selecionada}",
-            tickfont=dict(family="Arial, sans-serif", size=11),
-            gridcolor='lightgray',
-            gridwidth=0.5
-        ),
-        boxgap=0.3,
-        boxgroupgap=0.3,
-        hovermode="x unified",
-        separators=",."
+
+    # Estatísticas
+    estatisticas = (
+        df_filtrado
+        .groupby(nivel_geo, observed=True)[coluna_nota]
+        .agg(["min", "median", "max", "mean", "count"])
+        .reset_index()
     )
-    
-    # Atualizar traces com formatação melhorada
+
+    # Anotações com formatação BR
+    for _, row in estatisticas.iterrows():
+        geo = row[nivel_geo]
+        
+        min_fmt = formatar_decimal_br(row["min"], 1)
+        med_fmt = formatar_decimal_br(row["median"], 1)
+        max_fmt = formatar_decimal_br(row["max"], 1)
+
+        fig.add_annotation(
+            x=geo,
+            y=row["min"],
+            text=f"Mín: {min_fmt}",
+            showarrow=False,
+            font=dict(size=8),
+            yshift=-18,
+            bgcolor="rgba(255,255,255,0.6)"
+        )
+        
+        fig.add_annotation(
+            x=geo,
+            y=row["median"],
+            text=f"Med: {med_fmt}",
+            showarrow=False,
+            font=dict(size=8, color="darkblue"),
+            yshift=8,
+            bgcolor="rgba(255,255,255,0.6)"
+        )
+        
+        fig.add_annotation(
+            x=geo,
+            y=row["max"],
+            text=f"Máx: {max_fmt}",
+            showarrow=False,
+            font=dict(size=8),
+            yshift=15,
+            bgcolor="rgba(255,255,255,0.6)"
+        )
+
+    # Melhorias visuais
     fig.update_traces(
-        marker=dict(
-            size=4,
-            opacity=0.6,
-            line=dict(width=1, color='black')
-        ),
+        marker=dict(size=4, opacity=0.6),
         line=dict(width=2),
         hovertemplate=(
             f"<b>{rotulo_geo}:</b> %{{x}}<br>"
-            f"<b>{materia_selecionada}:</b> %{{y:.1f}}<br>"
+            f"<b>Nota:</b> %{{y:.1f}}<br>"
             "<extra></extra>"
         )
     )
-    
-    # Adicionar anotações com os valores dos quartis (opcional)
-    
-    """
-    
-    for geo in df_filtrado[nivel_geo].unique():
-        if ordem_geo and geo not in ordem_geo:
-            continue
-            
-        dados = df_filtrado[df_filtrado[nivel_geo] == geo][coluna_nota]
-        if len(dados) > 0:
-            q1, mediana, q3 = np.percentile(dados, [25, 50, 75])
-            minimo, maximo = dados.min(), dados.max()
-            
-            for valor, offset in [(minimo, -15), (q1, -10), (mediana, 10), (q3, 15), (maximo, 20)]:
-                fig.add_annotation(
-                    x=geo,
-                    y=valor,
-                    text=formatar_decimal_br(valor, 1),
-                    showarrow=False,
-                    font=dict(size=9, color="black", family="Arial, sans-serif"),
-                    yshift=offset,
-                    bgcolor="rgba(255,255,255,0.7)",
-                    bordercolor="lightgray",
-                    borderwidth=1,
-                    borderpad=2
-                )
-    """
-    
-    return fig, estatisticas
 
+    # Aplicar formatação BR nos eixos
+    fig = aplicar_eixos_br_plotly(fig, eixo_y_decimal=True, casas_decimais_y=1)
 
-# Versão alternativa com estatísticas em tabela separada
-def boxplot_notas_por_regiao_com_tabela(
-    df: pd.DataFrame,
-    ano_selecionado: Optional[str] = None,
-    filtro_geo: Optional[str] = None,
-    materia_selecionada: str = "Matemática",
-    escopo: str = 'mg'
-) -> Tuple[go.Figure, pd.DataFrame, go.Figure]:
-    """
-    Versão que retorna boxplot + tabela de estatísticas.
-    """
-    
-    # Obter boxplot e estatísticas
-    fig_box, estatisticas = boxplot_notas_por_regiao(
-        df=df,
-        ano_selecionado=ano_selecionado,
-        filtro_geo=filtro_geo,
-        materia_selecionada=materia_selecionada,
-        escopo=escopo
-    )
-    
-    if estatisticas.empty:
-        return fig_box, estatisticas, go.Figure()
-    
-    # Criar tabela com estatísticas formatadas
-    colunas_exibir = [estatisticas.columns[0], 'Média', 'Mediana', 'Mínimo', 'Máximo', 'Desvio Padrão', 'Nº Participantes']
-    colunas_exibir = [col for col in colunas_exibir if col in estatisticas.columns]
-    
-    df_tabela = estatisticas[colunas_exibir].copy()
-    
-    # Formatar números para a tabela
-    for col in df_tabela.columns:
-        if col != estatisticas.columns[0]:
-            if col == 'Nº Participantes':
-                df_tabela[col] = df_tabela[col].apply(lambda x: formatar_numero_br(x, 0))
-            else:
-                df_tabela[col] = df_tabela[col].apply(lambda x: formatar_decimal_br(x, 1))
-    
-    # Criar figura da tabela
-    fig_table = go.Figure(data=[go.Table(
-        header=dict(
-            values=[f"<b>{col}</b>" for col in df_tabela.columns],
-            fill_color="#2C3E50",
-            font=dict(color="white", size=12, family="Arial, sans-serif"),
-            align="center",
-            height=40
+    titulo_escopo = obter_nome_escopo(escopo)
+    fig.update_layout(
+        title=dict(
+            text=f"Distribuição das Notas — {titulo_escopo}",
+            x=0.5, 
+            xanchor="center",
+            y=0.95,
+            font=dict(size=18)
         ),
-        cells=dict(
-            values=[df_tabela[col].tolist() for col in df_tabela.columns],
-            fill_color="white",
-            font=dict(color="black", size=11, family="Arial, sans-serif"),
-            align="center",
-            height=30,
-            line=dict(width=1, color="lightgray")
-        )
-    )])
-    
-    fig_table.update_layout(
-        height=200 + 25 * len(df_tabela),
-        width=800,
-        margin=dict(l=20, r=20, t=20, b=20)
+        xaxis_title=rotulo_geo,
+        yaxis_title="Nota",
+        showlegend=False,
+        height=500,
+        width=900
     )
+
+    # Formatar estatísticas para exibição
+    estatisticas_fmt = estatisticas.copy()
+    for col in ["min", "median", "max", "mean"]:
+        estatisticas_fmt[col] = estatisticas_fmt[col].apply(lambda x: formatar_decimal_br(x, 1))
+    estatisticas_fmt["count"] = estatisticas_fmt["count"].apply(lambda x: formatar_numero_br(int(x)))
     
-    return fig_box, estatisticas, fig_table
+    estatisticas_fmt.rename(columns={
+        "min": "Mínimo",
+        "median": "Mediana",
+        "max": "Máximo",
+        "mean": "Média",
+        "count": "Nº Participantes"
+    }, inplace=True)
 
-
-
-
-    # Exibir estatísticas
-    print("\n=== Estatísticas por Região/UF ===")
-    display(estatisticas[['UF' if 'UF' in estatisticas.columns else estatisticas.columns[0], 
-                          'Média', 'Mediana', 'Mínimo', 'Máximo', 'Nº Participantes']])
-
-
+    return fig, estatisticas_fmt
 # =============================================================================
 # FUNÇÕES DE GRÁFICOS - ANÁLISE DE TECNOLOGIA
 # =============================================================================
 
 def analise_acesso_tecnologia(
     df: pd.DataFrame,
-    escopo: str = "mg",
+    escopo: str = "caxambu",
     ano_selecionado: Optional[str] = None,
     filtro_geo: Optional[str] = None,
     titulo: Optional[str] = None,
@@ -5580,13 +6049,166 @@ def analise_acesso_tecnologia(
 
     return fig, df_final
 
+
+
+def analise_acesso_tecnologia_cax(
+    df: pd.DataFrame,
+    escopo: str = "caxambu",
+    escola_selecionada: Optional[str] = None,
+    titulo: Optional[str] = None,
+    weight_col: str = "participantes"
+) -> Tuple[go.Figure, pd.DataFrame]:
+
+    # =========================
+    # 🔹 FILTRO
+    # =========================
+    df_filtrado = aplicar_filtros_dashboard(df=df, escopo=escopo).copy()
+
+    if escola_selecionada and escola_selecionada != "Todas":
+        df_filtrado = df_filtrado[df_filtrado["escola"] == escola_selecionada]
+
+    if df_filtrado.empty:
+        return go.Figure(), pd.DataFrame()
+
+    # =========================
+    # 🔹 AGREGAÇÃO POR ANO
+    # =========================
+    registros = []
+
+    for ano in sorted(df_filtrado["ano"].dropna().unique()):
+        df_ano = df_filtrado[df_filtrado["ano"] == ano]
+
+        registros.append({
+            "ano": str(ano),
+            "cel": media_ponderada(df_ano, "cel", weight_col),
+            "comptdr": media_ponderada(df_ano, "comptdr", weight_col),
+            "nota_media": media_ponderada(df_ano, "nota_media", weight_col),
+            "participantes": df_ano[weight_col].sum()
+        })
+
+    df_final = pd.DataFrame(registros)
+
+    if df_final.empty:
+        return go.Figure(), pd.DataFrame()
+
+    # =========================
+    # 🔹 FORMATAÇÃO
+    # =========================
+    df_final = adicionar_colunas_hover_br(
+        df_final,
+        {
+            "cel_fmt": ("cel", 2, "decimal"),
+            "comptdr_fmt": ("comptdr", 2, "decimal"),
+            "nota_fmt": ("nota_media", 1, "decimal"),
+            "participantes_fmt": ("participantes", 0, "numero"),
+        }
+    )
+
+    # =========================
+    # 🔹 TÍTULO
+    # =========================
+    if titulo is None:
+        titulo = "Evolução do Acesso à Tecnologia x Nota Média — Caxambu"
+
+        if escola_selecionada and escola_selecionada != "Todas":
+            titulo += f" ({escola_selecionada})"
+
+    # =========================
+    # 🔹 FIGURA
+    # =========================
+    fig = make_subplots(specs=[[{"secondary_y": True}]])
+
+    # BARRAS - CEL
+    fig.add_trace(
+        go.Bar(
+            x=df_final["ano"],
+            y=df_final["cel"],
+            name="Celulares",
+            marker_color=SEQUENCIA_CORES[0],
+            text=df_final["cel_fmt"],
+        ),
+        secondary_y=False
+    )
+
+    # BARRAS - COMPUTADOR
+    fig.add_trace(
+        go.Bar(
+            x=df_final["ano"],
+            y=df_final["comptdr"],
+            name="Computadores",
+            marker_color=SEQUENCIA_CORES[1],
+            text=df_final["comptdr_fmt"],
+        ),
+        secondary_y=False
+    )
+
+    # LINHA - NOTA
+    fig.add_trace(
+        go.Scatter(
+            x=df_final["ano"],
+            y=df_final["nota_media"],
+            name="Nota média",
+            mode="lines+markers+text",
+            text=df_final["nota_fmt"],
+            textposition="top center",
+            line=dict(color=SEQUENCIA_CORES[2], width=2.5),
+        ),
+        secondary_y=True
+    )
+
+    # =========================
+    # 🔹 RANGES (IGUAL AO ORIGINAL)
+    # =========================
+    max_barras = float(df_final[["cel", "comptdr"]].max().max())
+    y1_superior = max_barras * 1.50 if max_barras > 0 else 1
+
+    nota_min = float(df_final["nota_media"].min())
+    nota_max = float(df_final["nota_media"].max())
+    amplitude = nota_max - nota_min
+
+    margem_inferior = max(amplitude * 0.50, 220)
+    margem_superior = max(amplitude * 0.10, 40)
+
+    y2_inferior = max(0, nota_min - margem_inferior)
+    y2_superior = nota_max + margem_superior
+
+    # =========================
+    # 🔹 LAYOUT (IGUAL ORIGINAL)
+    # =========================
+    fig.update_layout(
+        title=dict(text=titulo, x=0.5, y=0.95),
+        barmode="overlay",  # 🔥 CRÍTICO
+        template="plotly_white",
+        height=520,
+        width=920,
+        legend=dict(
+            orientation="h",
+            x=0.5,
+            xanchor="center",
+            y=1.02
+        )
+    )
+
+    fig.update_yaxes(
+        visible=False,
+        range=[0, y1_superior],
+        secondary_y=False
+    )
+
+    fig.update_yaxes(
+        visible=False,
+        range=[y2_inferior, y2_superior],
+        secondary_y=True
+    )
+
+    return fig, df_final
 # =============================================================================
 # FUNÇÕES DE GRÁFICOS - TABELAS
 # =============================================================================
 
 def tabela_notas_maximas(df: pd.DataFrame, ano_selecionado: Optional[str] = None,
                           titulo: Optional[str] = None,
-                          escopo: str = 'mg') -> Tuple[go.Figure, pd.DataFrame]:
+                          escopo: str = 'caxambu') -> Tuple[go.Figure, pd.DataFrame]:
     """
     Tabela com as notas máximas por matéria
     """
@@ -5676,7 +6298,7 @@ def tabela_notas_maximas(df: pd.DataFrame, ano_selecionado: Optional[str] = None
             font=dict(size=16)
         ),
         height=400 + 40 * len(df_tabela),
-        margin=dict(l=20, r=20, t=60, b=50)
+        margin=dict(l=20, r=20, t=60, b=0)
     )
     
     return fig, df_tabela
@@ -5690,7 +6312,7 @@ def corr_heat_ponderada(
     df: pd.DataFrame,
     colunas_corr: List[str],
     weight_col: str = 'participantes',
-    escopo: str = "mg",
+    escopo: str = "caxambu",
     ano_selecionado: Optional[str] = None,
     filtro_geo: Optional[str] = None,
     titulo: Optional[str] = None
@@ -5832,7 +6454,7 @@ def corr_heat_ponderada(
 def criar_painel_indicadores_gerais(
     df_notas_filtrado: pd.DataFrame,
     df_demografico_filtrado: pd.DataFrame,
-    escopo: str = "mg",
+    escopo: str = "caxambu",
     titulo_base: Optional[str] = None,
     label_ano: str = "",
     ano_selecionado: Optional[str] = None, 
@@ -5846,7 +6468,7 @@ def criar_painel_indicadores_gerais(
         Base agregada com notas e participação.
     df_demografico_filtrado : pd.DataFrame
         Base demográfica agregada.
-    escopo : str, default="mg"
+    escopo : str, default="caxambu"
         'br', 'mg' ou 'caxambu'.
     titulo_base : str, optional
         Título base do painel.
@@ -6025,12 +6647,28 @@ def criar_painel_indicadores_gerais(
     # ---------------------------------------------------------
     if titulo_base is None:
         titulo_base = f"📊 Indicadores Gerais - {escopo_nome}"
-
+    
     if ano_selecionado:
         label_ano = f"({ano_selecionado})"
-
+    else:
+        # calcula intervalo automaticamente
+        if "ano" in df_notas_filtrado.columns and not df_notas_filtrado.empty:
+            anos = pd.to_numeric(df_notas_filtrado["ano"], errors="coerce").dropna()
+    
+            if not anos.empty:
+                ano_min = int(anos.min())
+                ano_max = int(anos.max())
+    
+                if ano_min == ano_max:
+                    label_ano = f"({ano_min})"
+                else:
+                    label_ano = f"({ano_min} a {ano_max})"
+            else:
+                label_ano = ""
+        else:
+            label_ano = ""
+    
     titulo_completo = f"{titulo_base} {label_ano}".strip()
-
     # ---------------------------------------------------------
     # figura
     # ---------------------------------------------------------
@@ -6047,9 +6685,9 @@ def criar_painel_indicadores_gerais(
             "Nota Média Geral",
             "Renda Média Familiar<br>(salários mínimos)",
             "Índice de Consumo Médio",
-            "Média de Computadores",
+            "Computadores por residência (média)",
             "Taxa de Presença Média",
-            "Melhor Nota Média (UF/ região)",
+            "Melhor Nota Média Geral(UF/ região)",
             "Melhor Nota Média",
             "Pior Nota Média",
             "Média das Notas por Área"
@@ -6314,7 +6952,7 @@ def bubble_chart_4d(
     filtro_geo: Optional[str] = None,
     usar_presenca_media: bool = True,
     titulo: Optional[str] = None,
-    escopo: str = "mg",
+    escopo: str = "caxambu",
     weight_col: str = "participantes"
 ) -> Tuple[go.Figure, pd.DataFrame, float]:
     """
@@ -6557,7 +7195,7 @@ def bubble_chart_4d(
     y_max = df_bolha["nota_media"].max() * 1.1 if not df_bolha.empty else 700
 
     fig.update_layout(
-        height=400,
+        height=450,
         width=700,
         title=dict(
             x=0.5,
@@ -6571,8 +7209,8 @@ def bubble_chart_4d(
             title="Nota Média"
         ),
         legend=dict(
-            x=0.9,
-            y=0.6,
+            x=0.94,
+            y=0.65,
             xanchor="right",
             yanchor="top",
             bordercolor="lightgray",

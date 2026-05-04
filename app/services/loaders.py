@@ -13,6 +13,13 @@ from src.config import (
     MERGED_MG,
     AMOSTRAG_RESULTADOS_MG,
     DADOS_AGG_MG_21_23,
+    DADOS_AGG_CAX,
+    DADOS_UNI_CAX,
+    DADOS_CAX_21_23,
+    DADOS_AGG_CAX_21_23,
+    MERGED_CAX,
+    RESULTADOS_AGG_CAX,
+    RESULTADOS_UNI_CAX,
 )
 
 
@@ -34,4 +41,16 @@ def carregar_bases_mg() -> dict[str, pd.DataFrame]:
         "merged": pd.read_parquet(MERGED_MG),
         "amostra": pd.read_parquet(AMOSTRAG_RESULTADOS_MG),
         "21_23": pd.read_parquet(DADOS_AGG_MG_21_23),
+    }
+
+@st.cache_data(show_spinner=False)
+def carregar_bases_cax() -> dict[str, pd.DataFrame]:
+    return {
+        "demografico": pd.read_parquet(DADOS_AGG_CAX),
+        "resultados": pd.read_parquet(RESULTADOS_AGG_CAX),
+        "merged": pd.read_parquet(MERGED_CAX),
+        "resultados_uni": pd.read_parquet(RESULTADOS_UNI_CAX),
+        "dados_uni": pd.read_parquet(DADOS_UNI_CAX),
+        "21_23": pd.read_parquet(DADOS_AGG_MG_21_23),
+        "21_23_uni": pd.read_parquet(DADOS_CAX_21_23),
     }
