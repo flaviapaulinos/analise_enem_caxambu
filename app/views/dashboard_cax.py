@@ -154,8 +154,11 @@ def render_dashboard_cax():
             info_fullwidth(
                 """Quanto o contexto social influencia a nota no ENEM?<br><br>
     
-        🔎 Navegque pelas abas para analisar os fatores socioeconômicos e sua relação com o desempenho dos participantes do Enem ao longo da série histórica (2021–2024), com foco em Caxambu.<br><br>
-        A abordagem combina análise descritiva, agregações ponderadas por participantes e visualizações multivariadas para identificar padrões estruturais na desigualdade educacional e modelo preditivo.
+        🔎 Navegue pelas abas para explorar a relação entre fatores socioeconômicos e o desempenho no ENEM ao longo da série histórica (2021–2024), com foco no município de Caxambu (MG) e comparação com Minas Gerais.
+
+A proposta deste aplicativo vai além da visualização de indicadores: ele foi desenvolvido para **explicar os dados**, destacando como variáveis como renda, tipo de escola e acesso a recursos se relacionam com os resultados educacionais.
+
+A análise combina estatística descritiva, agregações ponderadas por participantes e visualizações multivariadas, permitindo identificar padrões estruturais na desigualdade educacional, além de incorporar um modelo preditivo para estimar desempenho esperado.
         
         
         **Mais informações na página Projeto.**"""
@@ -168,10 +171,13 @@ def render_dashboard_cax():
             
             <b>Contexto e interpretação</b>
             
-            O Brasil é diverso e complexo — e os dados refletem apenas parte dessa realidade.<br>
-            
-            O questionário socioeconômico do Enem é uma fonte rica de informações sobre o contexto dos participantes. Quando analisado em conjunto com o desempenho nas provas, permite observar como fatores estruturais influenciam os resultados educacionais. Ainda assim, é importante reconhecer que os indivíduos são mais complexos do que qualquer base de dados pode representar.<br>
-            Por isso, as análises deste projeto são feitas em nível agregado, considerando grupos e médias — uma forma de compreender padrões estruturais, sem perder de vista que cada trajetória é única.
+            O Brasil é diverso e complexo — e os dados refletem apenas parte dessa realidade.
+
+O questionário socioeconômico do ENEM é uma fonte rica de informações sobre o contexto dos participantes. Quando analisado em conjunto com o desempenho nas provas, permite observar como fatores estruturais influenciam os resultados educacionais.
+
+No entanto, é importante reconhecer que os dados não capturam toda a complexidade das trajetórias individuais.
+
+Por isso, as análises deste projeto são realizadas em nível agregado — considerando grupos e médias — o que permite identificar padrões estruturais sem perder de vista que cada trajetória é única.
             
             </div>
                     """,
@@ -181,7 +187,7 @@ def render_dashboard_cax():
         st.subheader("Visão Geral: Enem — Caxambu (2021–2024)")
         
         info_fullwidth(
-        """Visão consolidada do ENEM em Minas Gerais ao longo da série histórica. """
+        """Visão consolidada do ENEM em Cxambu ao longo da série histórica. """
         )
     
     elif subaba_display == "estrutura socioeconômica":

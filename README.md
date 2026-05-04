@@ -14,10 +14,10 @@
 </p>
 
 ---
-dúvida 
+
 ## 📌 Visão Geral
 
-Este projeto investiga a relação entre **estrutura socioeconômica** e o desempenho dos participantes no ENEM, com foco em **Minas Gerais** e no **Brasil**.
+Este projeto investiga a relação entre **estrutura socioeconômica** e o desempenho dos participantes no ENEM, com foco em  **Caxambu**,  **Minas Gerais** e no **Brasil**.
 
 A proposta vai além da análise descritiva, adotando uma abordagem **estrutural e interpretável**, com o objetivo de responder:
 
