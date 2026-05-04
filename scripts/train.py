@@ -38,6 +38,21 @@ from src.modelos.interpretacao import (
     score_estrutural
 )
 
+import os
+
+def configurar_mlflow():
+    tracking_uri = os.getenv("MLFLOW_TRACKING_URI")
+
+    if tracking_uri:
+        mlflow.set_tracking_uri(tracking_uri)
+
+        os.environ["MLFLOW_TRACKING_USERNAME"] = os.getenv("MLFLOW_TRACKING_USERNAME")
+        os.environ["MLFLOW_TRACKING_PASSWORD"] = os.getenv("MLFLOW_TRACKING_PASSWORD")
+
+        print(f"✅ MLflow remoto ativo: {tracking_uri}")
+    else:
+        print("⚠️ MLflow local (nenhuma variável encontrada)")
+
 # ---------------------------------
 # Setup
 # ---------------------------------
@@ -236,6 +251,10 @@ def treinar_modelo(df, incluir_ano: bool):
 # ---------------------------------
 
 def main():
+
+    configurar_mlflow() 
+
+    print("Tracking URI atual:", mlflow.get_tracking_uri())
 
     mlflow.set_experiment("enem_mg_modelos_final")
 
