@@ -1,6 +1,5 @@
 streamlit
 pandas
-mlflow
 numpy
 plotly
 scikit-learn
@@ -9,7 +8,6 @@ pyarrow
 matplotlib
 seaborn
 geopandas
-shapely<2
+shapely
 geobr
 duckdb
-lxml<5

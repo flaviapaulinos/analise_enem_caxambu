@@ -1,9 +1,10 @@
 services:
   - type: web
     name: analise-enem
-    runtime: python
-    buildCommand: pip install -r requirements.txt
-    startCommand: streamlit run app/app.py --server.port=$PORT
+    runtime: image
+    repo: https://github.com/flaviapaulinos/analise_enem_caxambu
+    plan: free
+    dockerfilePath: ./Dockerfile
     envVars:
       - key: PYTHON_VERSION
-        value: 3.10.13
+        value: 3.10
