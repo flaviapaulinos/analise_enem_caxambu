@@ -153,31 +153,31 @@ def render_dashboard_cax():
         with col1:
             info_fullwidth(
                 """Quanto o contexto social influencia a nota no ENEM?<br><br>
-    
-🔎 Navegue pelas abas para explorar a relação entre fatores socioeconômicos e o desempenho no ENEM ao longo da série histórica (2021–2024), com foco no município de Caxambu (MG) em comparação com Minas Gerais.
-
-A proposta deste aplicativo vai além da visualização de indicadores: ele foi desenvolvido para **explicar os dados**, destacando como variáveis como renda, tipo de escola e acesso a recursos se relacionam com os resultados educacionais.
-
-A análise combina estatística descritiva, agregações ponderadas por participantes e visualizações multivariadas, permitindo identificar padrões estruturais na desigualdade educacional, além de incorporar um modelo preditivo para estimar desempenho esperado.
-        
-        
-**Mais informações na página Projeto.**""")
+            🔎 Navegue pelas abas para explorar a relação entre fatores socioeconômicos e o desempenho no ENEM ao longo da série histórica (2021–2024), com foco no município de Caxambu (MG) em comparação com Minas Gerais.
+            
+        A proposta deste aplicativo vai além da visualização de indicadores: ele foi desenvolvido para **explicar os dados**, destacando como variáveis como renda, tipo de escola e acesso a recursos se relacionam com os resultados educacionais.
+            
+        A análise combina estatística descritiva, agregações ponderadas por participantes e visualizações multivariadas, permitindo identificar padrões estruturais na desigualdade educacional, além de incorporar um modelo preditivo para estimar desempenho esperado.
+            
+        **Mais informações na página Projeto.**""")
 
         with col2:
             st.markdown(
                 """
-<div style="background-color:#01818078; solid #01818078">
+                
+                <div style="background-color:#01818078; solid #01818078">
+                
+                <b>Contexto e interpretação</b>
+                
+                O Brasil é diverso e complexo — e os dados refletem apenas parte dessa realidade.
+                
+                O questionário socioeconômico do ENEM é uma fonte rica de informações sobre o contexto dos participantes. Quando analisado em conjunto com o desempenho nas provas, permite observar como fatores estruturais influenciam os resultados educacionais.
+                
+                No entanto, é importante reconhecer que os dados não capturam toda a complexidade das trajetórias individuais.
+                
+                Por isso, as análises deste projeto são realizadas em nível agregado — considerando grupos e médias — o que permite identificar padrões estruturais sem perder de vista que cada trajetória é única.
             
-<b>Contexto e interpretação</b>
-            
-O Brasil é diverso e complexo — e os dados refletem apenas parte dessa realidade.
-
-O questionário socioeconômico do ENEM é uma fonte rica de informações sobre o contexto dos participantes. Quando analisado em conjunto com o desempenho nas provas, permite observar como fatores estruturais influenciam os resultados educacionais.
-
-No entanto, é importante reconhecer que os dados não capturam toda a complexidade das trajetórias individuais.
-
-Por isso, as análises deste projeto são realizadas em nível agregado — considerando grupos e médias — o que permite identificar padrões estruturais sem perder de vista que cada trajetória é única.
-            
+                 </div>
                     """,
                     unsafe_allow_html=True
                 )
@@ -185,7 +185,7 @@ Por isso, as análises deste projeto são realizadas em nível agregado — cons
         st.subheader("Visão Geral: Enem — Caxambu (2021–2024)")
         
         info_fullwidth(
-        """Visão consolidada do ENEM em Cxambu ao longo da série histórica. """
+        """Visão consolidada do ENEM em Caxambu ao longo da série histórica. """
         )
     
     elif subaba_display == "estrutura socioeconômica":
