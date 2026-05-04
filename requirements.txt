@@ -11,3 +11,4 @@ geopandas
 shapely
 geobr
 duckdb
+mlflow
