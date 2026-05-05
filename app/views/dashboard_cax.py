@@ -275,7 +275,7 @@ def render_dashboard_cax():
             
         st.caption(
             
-            """A análise dos indicadores educacionais no período de 2021 a 2024
+            """Análise dos indicadores educacionais no período de 2021 a 2024
             
 Caxambu apresenta um desempenho geral próximo ao de Minas Gerais, com algumas diferenças estruturais importantes — especialmente no perfil socioeconômico — e pontos positivos relevantes no engajamento e na performance em áreas específicas.
 
