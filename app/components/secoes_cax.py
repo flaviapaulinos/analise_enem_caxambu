@@ -95,7 +95,7 @@ def render_subaba_social_demografica_cax(
         
 Escola: A elevada proporção de participantes que não informaram o tipo de escola cursada no ensino médio merece atenção. 
 Uma hipótese plausível é a dificuldade de classificação por parte de estudantes com trajetória híbrida (rede pública e privada), 
-o que pode levar à não resposta por não se identificarem plenamente com apenas uma das categorias."""
+o que pode levar à não resposta, por não se identificarem plenamente com apenas uma das categorias."""
         )
         st.caption(
                 "Renda: Em Caxambu, 76% dos participantes declararam renda familiar mensal de até 3 salários mínimos. "
@@ -122,7 +122,7 @@ o que pode levar à não resposta por não se identificarem plenamente com apena
         plot(fig_evolucao_renda, "cax_evolucao_renda")
         st.caption(
             """Análise: 
-Escola: Apenas 10% dos participantes informaram ter cursado o ensino médio em escola privada. Na análise temporal, observa-se queda na renda média entre estudantes de escola pública (-9,4%) e privada (-8,9%) entre 2021 e 2024. Em contraste, o grupo que não informou o tipo de escola apresentou crescimento expressivo (+46,5%), contudo, esse resultado é fortemente influenciado pelo baixo número de observações em 2024 (n=5), o que limita sua robustez estatística. Em Minas Gerais, a evolução da renda média ao longo dos anos foi observada apenas entre os participantes que não informaram o tipo de escola cursada."""
+Escola: Apenas 10% dos participantes informaram ter cursado o ensino médio em escola privada. Na análise temporal, observa-se queda na renda média entre estudantes de escola pública (-9,4%) e privada (-8,9%) entre 2021 e 2024. Em contraste, o grupo que não informou o tipo de escola apresentou crescimento expressivo (+46,5%), contudo, esse resultado é fortemente influenciado pelo baixo número amostral em 2024 (n=5), o que limita sua robustez estatística. Em Minas Gerais, a evolução da renda média ao longo dos anos foi observada apenas entre os participantes que não informaram o tipo de escola cursada."""
         )
         
         st.caption(
@@ -239,7 +239,7 @@ A escolaridade dos responsáveis, assim como no resto do país, se concentra em:
         )
         st.caption(
              """ Análise:
-Já em relação a ocupação do responsáveis, há uma diferenciação entre mães e pais. A ocupação dos pais se divide principalmente em: rural, atividades que exigem ensino básico,  atividades que exigem ensino médio/ ou técnico e atividades manuais que exigem ensino fundamental. Muito similar a distribuição do país. A ocupação das mães se concentra em atividades básicas e atividades que exigem ensino médio, ou ensino técnico (padrão que pode ser visto no resto do país também)."""
+Já em relação à ocupação dos responsáveis, há uma diferenciação entre mães e pais. A ocupação dos pais se divide principalmente em: rural, atividades que exigem ensino básico,  atividades que exigem ensino médio/ ou técnico e atividades manuais que exigem ensino fundamental. Muito similar à distribuição do país. A ocupação das mães se concentra em atividades básicas e atividades que exigem ensino médio, ou ensino técnico (padrão que pode ser visto no resto do país também)."""
             )
         #colocar link para dicionário
 
@@ -318,7 +318,7 @@ def render_subaba_notas_cax(
 Matemática — principal oportunidade: Maior desvio padrão (em ambos)
 Alta dispersão: base mais fraca / topo competitivo
 
-Existe um grupo de alto desempenho competitivo com o estado
+Existe um grupo de alto desempenho competitivo em relação ao estado
 
 Redação
 Menor desigualdade interna
@@ -327,8 +327,7 @@ Em várias disciplinas:
 
 	* Intervalos mais compactos
 	* Menos extremos
-
-Indicador de maior equidade educacional
+Isso é um indicador de maior equidade educacional
 
 Caxambu apresenta desempenho geral próximo ao de Minas Gerais, com destaque para a consistência dos resultados e menor desigualdade entre os participantes. Embora as médias sejam ligeiramente inferiores, observa-se a presença de alunos com desempenho elevado, especialmente em redação e matemática, indicando potencial competitivo. Os principais desafios concentram-se na elevação do desempenho da base de alunos, mais do que na formação de alta performance."""
         )
@@ -381,8 +380,8 @@ def render_subaba_desempenho_estrutura_cax(
         
         Análise:
              
-    A análise da relação entre renda familiar e desempenho evidencia um padrão consistente tanto em Caxambu quanto em Minas Gerais: quanto maior a renda, maior tende a ser a nota dos participantes. Caxambu tem maior engajamento, mesmo com menos recursos (em relação a média do estado)
-    Existe um ganho consistente de desempenho conforme aumenta a renda, especialmente na faixa de 10 a 15 salários mínimos. A relação não é perfeitamente linear nas rendas mais altas devido ao baixo número de participantes, o que aumenta a volatilidade Caxambu performa como o esperadado dado o nível de renda."""
+    A análise da relação entre renda familiar e desempenho evidencia um padrão consistente tanto em Caxambu, quanto em Minas Gerais: quanto maior a renda, maior tende a ser a nota dos participantes. Caxambu apresenta maior engajamento, mesmo com menos recursos (em relação à média do estado).
+    Existe um ganho consistente de desempenho conforme aumenta a renda, especialmente na faixa de 10 a 15 salários mínimos. A relação não é perfeitamente linear nas rendas mais altas devido ao baixo número de participantes, o que aumenta a volatilidade Caxambu apresenta desempenho compatível com o esperado, dado o nível de renda."""
         )
                    
 
@@ -395,7 +394,7 @@ def render_subaba_desempenho_estrutura_cax(
     st.caption(
         """ Análise:
         
-    Em Caxambu assim como Minas, observa-se que em todas as faixas de renda, alunos de escolas privadas superam os de escolas públicas (notas médias). A diferença pode ultrapassar 80 a 100 pontos nas faixas mais baixas.
+    Em Caxambu, assim como Minas, observa-se que em todas as faixas de renda, alunos de escolas privadas superam os de escolas públicas (notas médias). A diferença pode ultrapassar 80 a 100 pontos nas faixas mais baixas.
 O tipo de escola atua como um fator adicional relevante, além da renda."""
     )
 

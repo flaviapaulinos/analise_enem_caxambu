@@ -136,10 +136,6 @@ def render_dashboard_cax():
     anos = sorted(df_d_seg["ano"].dropna().astype(str).unique())
 
 
-  
-    anos = sorted(df_d_seg["ano"].dropna().astype(str).unique())
-
-
     subaba_display = st.session_state.get("cax_subaba", "visão geral")
 
 # =========================================================
@@ -153,11 +149,11 @@ def render_dashboard_cax():
         with col1:
             info_fullwidth(
                 """Quanto o contexto social influencia a nota no ENEM?<br><br>
-            🔎 Navegue pelas abas para explorar a relação entre fatores socioeconômicos e o desempenho no ENEM ao longo da série histórica (2021–2024), com foco no município de Caxambu (MG) em comparação com Minas Gerais.
+            🔎 Navegue pelas abas para explorar a relação entre fatores socioeconômicos e o desempenho no ENEM ao longo da série histórica (2021–2024), com foco no município de Caxambu (MG) em comparação com o estado.
             
         A proposta deste aplicativo vai além da visualização de indicadores: ele foi desenvolvido para **explicar os dados**, destacando como variáveis como renda, tipo de escola e acesso a recursos se relacionam com os resultados educacionais.
             
-        A análise combina estatística descritiva, agregações ponderadas por participantes e visualizações multivariadas, permitindo identificar padrões estruturais na desigualdade educacional, além de incorporar um modelo preditivo para estimar desempenho esperado.
+        A análise combina estatística descritiva, agregações ponderadas por participantes e visualizações multivariadas, permitindo identificar padrões estruturais na desigualdade educacional e incorporando um modelo preditivo para estimar desempenho esperado.
             
         **Mais informações na página Projeto.**""")
 
@@ -287,7 +283,7 @@ No período analisado, Minas Gerais contabilizou mais de 1,39 milhão de partici
 
 Caxambu apresenta renda média familiar (2,87) inferior à de Minas Gerais (3,41), além de menor acesso a recursos, como computadores (0,78 em média, contra 0,93 no estado) e índice de consumo (0,319 vs. 0,328). Ainda assim, o município demonstra um importante diferencial: a taxa de presença média é superior, atingindo 76,1% frente a 71,2% no estado. Esse dado é particularmente relevante, pois indica maior engajamento dos participantes locais — fator que contribui diretamente para a qualidade e representatividade dos resultados.
 
-Caxambu apresenta escolas com desempenho máximo equivalente ao das melhores do estado, evidenciando capacidade de alta performance. Ao mesmo tempo, embora exista variação entre escolas, a distribuição geral dos resultados sugere um sistema relativamente consistente, com diferenças mais concentradas nos extremos do que no conjunto dos participantes.
+Caxambu apresenta escolas com desempenho máximo equivalente ao das melhores do estado, evidenciando capacidade de alta performance. Ao mesmo tempo, embora exista variação entre escolas, a distribuição geral dos resultados sugere um sistema relativamente consistente, com diferenças mais concentradas nos extremos da distribuição do que no conjunto dos participantes.
 
 🎯 Desempenho acadêmico
 
