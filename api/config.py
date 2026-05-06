@@ -2,10 +2,9 @@ import os
 
 MLFLOW_TRACKING_URI = os.getenv(
     "MLFLOW_TRACKING_URI",
-    "https://dagshub.com/SEU_USUARIO/SEU_REPO.mlflow"
+    "https://dagshub.com/flaviapaulinos/analise_enem_caxambu.mlflow"
 )
 
 MLFLOW_MODEL_URI = os.getenv(
-    "MLFLOW_MODEL_URI",
-    "models:/enem_model/Production"  # ajuste para seu registry
+    "MLFLOW_MODEL_URI",  "models:/enem_caxambu_produto/Production"  # ajuste para seu registry
 )
