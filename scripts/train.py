@@ -201,7 +201,12 @@ def treinar_modelo(df, incluir_ano: bool):
         mlflow.log_metric("r2", r2)
         mlflow.log_metric("cv", cv)
 
-        mlflow.sklearn.log_model(modelo, "model")
+        mlflow.sklearn.log_model(
+            sk_model=modelo,
+            artifact_path="model",
+            
+            registered_model_name=f"enem_caxambu_{nome_modelo}"
+        )
 
         # Interpretação
         coefs = dataframe_coeficientes(
