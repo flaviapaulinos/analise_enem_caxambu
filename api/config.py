@@ -6,5 +6,6 @@ MLFLOW_TRACKING_URI = os.getenv(
 )
 
 MLFLOW_MODEL_URI = os.getenv(
-    "MLFLOW_MODEL_URI",  "models:/enem_caxambu_produto/Production"  # ajuste para seu registry
+    "MLFLOW_MODEL_URI",
+    "models:/enem_caxambu_produto/Production"
 )
