@@ -158,7 +158,7 @@ O dashboard permite:
 - análise regional  
 - simulação com modelo  
 
-👉 **[Acesse o dashboard](https://projetoenem.streamlit.app/)**
+👉 **[Acesse o dashboard](https:/enemcaxambu.streamlit.app/)**
 
 
 ##  Estrutura do Projeto
@@ -384,7 +384,7 @@ The project includes a **Streamlit dashboard** with:
 
 ### 🔗 App link
 
-👉 *(add your deployment link here)*
+👉 **[dashboard](https:/enemcaxambu.streamlit.app/)**
 
 ---
 
