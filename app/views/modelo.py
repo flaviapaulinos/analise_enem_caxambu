@@ -117,7 +117,7 @@ def render_aba_modelo():
     if st.button("Prever nota"):
 
         try:
-            url = "https://analise-enem-caxambu-1.onrender.com/predict"
+            url = url = "http://api:8000/predict"
 
             payload = dados.iloc[0].to_dict()
 
