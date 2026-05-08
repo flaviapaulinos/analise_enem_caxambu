@@ -119,23 +119,20 @@ def render_aba_modelo():
     if st.button("Prever nota"):
 
         try:
+    
             payload = dados.iloc[0].to_dict()
-
-            response = requests.post(url, json=payload)
-
+    
+            response = requests.post(API_URL, json=payload)
+    
             if response.status_code == 200:
-
+    
                 resultado = response.json()
                 nota = resultado["nota_prevista"]
-
+    
                 st.success(f"Nota prevista: {nota:.1f}")
-
-                # 🔥 SCORE LOCAL (mantido)
-                # Aqui você pode manter se quiser ou remover depois
-                st.info("Score estrutural disponível apenas na versão local do modelo.")
-
+    
             else:
                 st.error(f"Erro na API: {response.text}")
-
+    
         except Exception as e:
             st.error(f"Erro na requisição: {e}")
