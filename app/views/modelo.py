@@ -3,7 +3,7 @@ import pandas as pd
 import requests
 
 
-from app.config import API_URL
+from config import API_URL
 from src.modelos.interpretacao import score_estrutural
 from src.preprocessamento.categorias import (
     ORDEM_SAL_MIN,
