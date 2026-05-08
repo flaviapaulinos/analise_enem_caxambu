@@ -2,6 +2,8 @@ import streamlit as st
 import pandas as pd
 import requests
 
+
+from app.config import API_URL
 from src.modelos.interpretacao import score_estrutural
 from src.preprocessamento.categorias import (
     ORDEM_SAL_MIN,
@@ -117,8 +119,6 @@ def render_aba_modelo():
     if st.button("Prever nota"):
 
         try:
-            url = url = "http://api:8000/predict"
-
             payload = dados.iloc[0].to_dict()
 
             response = requests.post(url, json=payload)

@@ -1,26 +1,35 @@
 services:
+
   # 🔹 API (FastAPI)
   - type: web
     name: enem-caxambu-api
     env: python
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn api.main:app --host 0.0.0.0 --port 10000
+
     envVars:
       - key: PYTHON_VERSION
         value: 3.10
+
       - key: MLFLOW_TRACKING_URI
         value: https://dagshub.com/flaviapaulinos/analise_enem_caxambu.mlflow
+
       - key: MLFLOW_TRACKING_USERNAME
         sync: false
+
       - key: MLFLOW_TRACKING_PASSWORD
         sync: false
 
-  # 🔹 Streamlit (opcional se quiser no Render)
+  # 🔹 Streamlit
   - type: web
     name: enem-caxambu-app
     env: python
     buildCommand: pip install -r requirements.txt
     startCommand: streamlit run app/app.py --server.port 10000 --server.address 0.0.0.0
+
     envVars:
       - key: PYTHON_VERSION
         value: 3.10
+
+      - key: API_URL
+        value: https://analise-enem-caxambu-1.onrender.com/predict
