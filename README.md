@@ -44,7 +44,8 @@ Os dados utilizados são os microdados oficiais do ENEM (INEP).
 Abordagens utilizadas:
 
 - **Brasil (2024)** → análise agregada nacional  
-- **Minas Gerais (2021–2024)** → análise temporal e estrutural  
+- **Minas Gerais (2021–2024)** → análise temporal e estrutural
+- **Caxambu (2021–2024)** → análise temporal e estrutural  
 
 ⚠️ Em 2024, as bases foram disponibilizadas separadamente (perfil e desempenho), impossibilitando análise individual direta.
 

@@ -132,6 +132,25 @@ for pasta in [PASTA_RELATORIOS, PASTA_IMAGENS]:
 RELATORIO = PASTA_RELATORIOS / "relatorio-eda.html"
 
 # ======================
+# MONITORAMENTO / EVIDENTLY
+# ======================
+
+PASTA_EVIDENTLY = PASTA_RELATORIOS / "evidently"
+
+PASTA_EVIDENTLY.mkdir(
+    parents=True,
+    exist_ok=True
+)
+
+RELATORIO_DRIFT_TEMPORAL = (
+    PASTA_EVIDENTLY / "drift_temporal_2024.html"
+)
+
+RELATORIO_QUALIDADE_TEMPORAL = (
+    PASTA_EVIDENTLY / "quality_temporal_2024.html"
+)
+
+# ======================
 # RESULTADOS / MLFLOW
 # ======================
 PASTA_RESULTADOS = PASTA_PROJETO / "resultados"
