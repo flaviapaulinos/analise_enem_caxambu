@@ -394,7 +394,7 @@ def render_subaba_desempenho_estrutura_cax(
     st.caption(
         """ Análise:
         
-    Em Caxambu, assim como Minas, observa-se que em todas as faixas de renda, alunos de escolas privadas superam os de escolas públicas (notas médias). A diferença pode ultrapassar 80 a 100 pontos nas faixas mais baixas.
+Em Caxambu, assim como Minas, observa-se que em todas as faixas de renda, alunos de escolas privadas superam os de escolas públicas (notas médias). A diferença pode ultrapassar 80 a 100 pontos nas faixas mais baixas.
 O tipo de escola atua como um fator adicional relevante, além da renda."""
     )
 
@@ -463,6 +463,7 @@ Os dados indicam que o desempenho educacional em Caxambu está fortemente associ
 👉 Em termos estratégicos:
 
 O desafio principal está na redução das desigualdades associadas à renda e à rede de ensino
+
 O potencial de alto desempenho já está presente e pode ser expandido."""    
         )
 
