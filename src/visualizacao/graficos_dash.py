@@ -6176,8 +6176,12 @@ def analise_acesso_tecnologia_cax(
     # 🔹 LAYOUT (IGUAL ORIGINAL)
     # =========================
     fig.update_layout(
-        title=dict(text=titulo, x=0.5, y=0.95, xanchor="center"),
-        barmode="overlay",  # 🔥 CRÍTICO
+        title=dict(
+            text=titulo, 
+            xanchor="center",
+            x=0.5, 
+            y=0.95),
+        barmode="overlay", 
         template="plotly_white",
         height=520,
         width=920,
