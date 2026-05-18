@@ -6,6 +6,9 @@
 ![Streamlit](https://img.shields.io/badge/Streamlit-Dashboard-red)
 ![Machine Learning](https://img.shields.io/badge/Machine%20Learning-Model-green)
 ![Status](https://img.shields.io/badge/status-active-success)
+![Docker](https://img.shields.io/badge/Docker-Containerized-blue)
+![FastAPI](https://img.shields.io/badge/FastAPI-API-green)
+![Azure](https://img.shields.io/badge/Azure-Cloud-blue)
 
 <p align="center">
   <sub>
@@ -144,6 +147,58 @@ Uso de MLflow para:
 - comparação entre abordagens  
 
 ---
+
+## ☁️ Arquitetura, API e Deploy
+
+O projeto foi estruturado com foco em modularidade, reprodutibilidade e preparação para ambientes de produção.
+
+#### 🐳 Containerização com Docker
+
+A aplicação foi containerizada utilizando Docker, garantindo:
+
+isolamento de dependências
+consistência entre ambientes
+facilidade de deploy
+escalabilidade da aplicação
+
+A estratégia permite executar localmente e em nuvem a mesma estrutura utilizada em desenvolvimento.
+
+#### ⚡ API com FastAPI
+
+Além do dashboard interativo, o projeto inclui uma API desenvolvida com FastAPI para disponibilização das previsões do modelo.
+
+A API permite:
+
+envio de perfis socioeconômicos
+inferência do modelo treinado
+integração com aplicações externas
+arquitetura orientada a serviços
+
+#### ☁️ Deploy em Nuvem (Azure)
+
+A aplicação foi publicada em ambiente cloud utilizando Microsoft Azure.
+
+O deploy contempla:
+
+container Docker em produção
+disponibilização da API
+execução do dashboard em nuvem
+arquitetura preparada para CI/CD
+
+Essa etapa amplia a reprodutibilidade e aproxima o projeto de cenários reais de engenharia de dados e machine learning em produção.
+
+🧩 Arquitetura Geral
+
+Fluxo simplificado da solução:
+
+Dados ENEM → Pipeline ETL → Feature Engineering → Modelo ML
+                                               ↓
+                                      FastAPI + Streamlit
+                                               ↓
+                                      Docker Container
+                                               ↓
+                                         Azure Cloud
+
 
 ## 📊 Dashboard Interativo
 
@@ -373,6 +428,57 @@ The model enables:
 - simulation of socioeconomic scenarios  
 
 ---
+
+## ☁️ Architecture, API and Deployment
+
+The project was structured with a focus on modularity, reproducibility, and readiness for production environments.
+
+#### 🐳 Docker Containerization
+
+The application was containerized using Docker, ensuring:
+
+dependency isolation
+environment consistency
+easier deployment
+application scalability
+
+This approach enables the same architecture used during development to run consistently both locally and in cloud environments.
+
+#### ⚡ FastAPI Integration
+
+In addition to the interactive dashboard, the project includes an API built with FastAPI to serve the model predictions.
+
+The API enables:
+
+submission of socioeconomic profiles
+inference using the trained model
+integration with external applications
+service-oriented architecture
+
+#### ☁️ Cloud Deployment (Azure)
+
+The application was deployed to the cloud using Microsoft Azure.
+
+The deployment includes:
+
+Docker containers running in production
+API availability in the cloud
+cloud-hosted dashboard execution
+architecture prepared for CI/CD workflows
+
+This stage improves reproducibility and brings the project closer to real-world data engineering and machine learning production scenarios.
+
+🧩 Overall Architecture
+
+Simplified solution flow:
+
+ENEM Data → ETL Pipeline → Feature Engineering → ML Model
+                                                ↓
+                                       FastAPI + Streamlit
+                                                ↓
+                                        Docker Container
+                                                ↓
+                                           Azure Cloud
 
 ## 📊 Interactive Dashboard
 
